@@ -1,8 +1,8 @@
-\section{Preliminary results}\label{theor_sec}
+\section{Preliminary results on the fractional Laplace operator}\label{theor_sec}
 
-In this Section, we introduce some preliminary result that will be useful in the remaining of the paper.
+In this Section, we introduce some preliminary result that will be useful in the remainder of the paper.
 
-\subsection{Elliptic problem}
+%\subsection{Elliptic problem}
 
 We start by giving a more rigorous definition of the fractional Laplace operator, as we have anticipated in Section \ref{intro_sec}. Let
 \begin{align*}
@@ -18,23 +18,48 @@ The fractional Laplacian is then defined by the following singular integral
 \end{align}
 provided that the limit exists. 
 
-We notice that if $0<s<1/2$ and $u$ is smooth, for example bounded and Lipschitz continuous on $\RR$, then the integral in \eqref{fl} is in fact not really singular near $x$ (see e.g. \cite[Remark 3.1]{dihitchhiker}). Moreover, $\mathcal L_s^1(\RR)$ is the right space for which $v:= (-d_x^2)^s_{\varepsilon} u$ exists for every $\varepsilon > 0$, $v$ being also continuous at the continuity points of $u$.
+We notice that if $0<s<1/2$ and $u$ is a smooth function, for example bounded and Lipschitz continuous on $\RR$, then the integral in \eqref{fl} is in fact not really singular near $x$ (see e.g. \cite[Remark 3.1]{dihitchhiker}). Moreover, $\mathcal L_s^1(\RR)$ is the right space for which $v:= (-d_x^{\,2})^s_{\varepsilon}\, u$ exists for every $\varepsilon > 0$, $v$ being also continuous at the continuity points of $u$.
 
-Let us now introduce the variational formulation associated to equation \eqref{PE}, which will be the starting point for the development of the FE approximation of the problem we are considering. That is, find $u\in H^s_0(-L,L)$ such that
+It is by now well-known (see, e.g., \cite{dihitchhiker}) that the natural functional setting for problems involving the Fractional Laplacian is the one of the fractional Sobolev spaces. Since these spaces are not so familiar as the classical integral order ones, for the sake of completeness, we recall here their definition. 
+
+Given $s\in(0,1)$, the fractional Sobolev space $H^s(-L,L)$ is defined as
 \begin{align*}
-	a(u,v) = \int_{-L}^L fv\,dx,	
+	H^s(-L,L):= \left\{u\in L^2(-L,L)\,:\, \frac{|u(x)-u(y)|}{|x-y|^{\frac 12+s}}\in L^2\Big((-L,L)^2\Big)\right\}.
+\end{align*}
+
+It is classical that this is a Hilbert space, endowed with the norm (derived from the scalar product)
+\begin{align*}
+	\norm{u}{H^s(-L,L)} := \left[\norm{u}{L^2(-L,L)}^2 + |u|_{H^s(-L,L)}^2\right]^{\frac 12},
+\end{align*}
+where the term 
+\begin{align*}
+|u|_{H^s(-L,L)}:= \left(\int_{-L}^L\int_{-L}^L \frac{|u(x)-u(y)|^2}{|x-y|^{1+2s}}\,dxdy\right)^{\frac 12}
+\end{align*}
+is the so-called Gagliardo seminorm of $u$. We set 
+\begin{align*}
+H_0^s(-L,L):= \overline{C_0^\infty(-L,L)}^{\,H^s(-L,L)}
+\end{align*}
+the closure of the continuous infinitely differentiable functions compactly supported in $(-L,L)$ with respect to the $H^s(-L,L)$-norm. The following facts are well-known.
+\begin{itemize}
+	\item[$\bullet$] For $0<s\leq\frac 12$, the identity $H_0^s(-L,L) = H^s(-L,L)$ holds. This is because, in this case, the $C_0^\infty(-L,L)$ functions are dense in $H^s(-L,L)$ (see, e.g., \cite[Theorem 11.1]{jllions1972non}).
+	
+	\item[$\bullet$] For $\frac 12<s<1$, we have $H_0^s(-L,L)=\left\{ u\in H^s(\RR)\,:\,u=0\textrm{ in } \RR\setminus (-L,L)\right\}$ (\cite{fiscella2015density}).
+\end{itemize}
+
+Finally, in what follows we will indicate with $H^{-s}(-L,L)=\left(H^s(-L,L)\right)'$ the dual space of $H^s(-L,L)$ with respect tot the pivot space $L^2(-L,L)$.
+
+A more exhaustive description of fractional Sobolev spaces and of their properties can be found in several classical references (see, e.g., \cite{adams2003sobolev,dihitchhiker,jllions1972non}).
+
+Let us now introduce the variational formulation associated to equation \eqref{PE}. That is, find $u\in H^s_0(-L,L)$ such that
+\begin{align*}
+a(u,v) = \int_{-L}^L fv\,dx,	
 \end{align*}
 for all $v\in H_0^s(-L,L)$, where the bilinear form $a(\cdot,\cdot):H^s_0(-L,L)\times H^s_0(-L,L)\to \RR$ is given by
 \begin{align*}
-	a(u,v)=\frac{\ccs}{2} \int_{\RR}\int_{\RR}\frac{(u(x)-u(y))(v(x)-v(y))}{|x-y|^{1+2s}}\,dxdy.	
+a(u,v)=\frac{\ccs}{2} \int_{\RR}\int_{\RR}\frac{(u(x)-u(y))(v(x)-v(y))}{|x-y|^{1+2s}}\,dxdy.	
 \end{align*}
-Here, $H^s_0(-L,L)$ denotes the space 
-\begin{align*}
-	H^s_0(-L,L) :=\Big\{\, u\in H^s(\RR)\,:\,u=0 \textrm{ in } \RR\setminus(-L,L)\,\Big\}, 
-\end{align*}
-while with $H^s(\RR)$ we indicate the classical fractional Sobolev space of order $s$. We refer to \cite{dihitchhiker} for a complete description of these spaces.  
 
-Since the bilinear form $a$ is continuous and coercive, Lax-Milgram Theorem immediately implies existence and uniqueness of solutions to the Dirichlet problem \eqref{PE}. In more detail, if $f\in H^{-s}(-L,L)$, then \eqref{PE} admits a unique weak solution $u\in H_0^s(-L,L)$ (see, e.g., \cite[Proposition 2.1]{biccari2017local}). Here $H^{-s}(-L,L)$ stands for the dual space of $H^s_0(-L,L)$. Furthermore, in the literature it is possible to find improved regularity results for the solution to \eqref{PE}, both in H\"older and Sobolev spaces. The interested reader may refer, for instance, to \cite{acosta2017fractional,biccari2017local,leonori2015basic,ros2014dirichlet,ros2014extremal}.
+Since the bilinear form $a$ is continuous and coercive, Lax-Milgram Theorem immediately implies existence and uniqueness of solutions to the Dirichlet problem \eqref{PE}. In more detail, if $f\in H^{-s}(-L,L)$, then \eqref{PE} admits a unique weak solution $u\in H_0^s(-L,L)$ (see, e.g., \cite[Proposition 2.1]{biccari2017local}). Furthermore, in the literature it is possible to find improved regularity results for the solution to \eqref{PE}, both in H\"older and Sobolev spaces. The interested reader may refer, for instance, to \cite{acosta2017fractional,biccari2017local,leonori2015basic,ros2014dirichlet,ros2014extremal}.
 
 \subsection{Parabolic problem}
 
@@ -200,5 +225,6 @@ This holds for every $z\in\CC\setminus\{-\lambda_k\}_{k\in\NN}$, using the analy
 According to \cite[Theorem 1.4]{fall2014unique}, $\fl{s}{}$ has the unique continuation property in the sense that if $\lambda_k$ is an eigenvalue of $\fl{s}{}$ on (-1,1) with Dirichlet boundary conditions, and $(\fl{s}{}-\lambda_k)\varrho_k = 0$ in $(-1,1)$ with $\varrho_k = 0$ in $\omega$, then $\varrho_k = 0$ in $(-1,1)$. 
 This can applied to $w_{\ell}$, in order to conclude $w_{\ell} = 0$ in $(-1,1)$ for every $\ell$. Since $\{\psi_{\ell_j}\}_{1\leq j\leq m_{\ell}}$ are linearly independent in $L^2(-1,1)$, we get $\varphi_{\ell_j} = 0$, $1\leq j\leq m_k$, $\ell\in\NN$. It follows that $\varphi^T=0$ and hence, $\varphi=0$ in $(-1,1)\times(0,T)$, meaning that $\varphi$ enjoys the property $(\mathcal{P})$. As an immediate consequence, we have that our original equation \eqref{heat_frac} is approximately controllable. This last fact being classical (see, e.g., \cite[Theorem 2.5]{keyantuo2016interior}), we will leave the details to the reader. Our proof is then concluded. 
 \end{proof}
+
 
 

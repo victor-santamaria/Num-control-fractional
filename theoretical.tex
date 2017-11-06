@@ -1,0 +1,204 @@
+\section{Preliminary results}\label{theor_sec}
+
+In this Section, we introduce some preliminary result that will be useful in the remaining of the paper.
+
+\subsection{Elliptic problem}
+
+We start by giving a more rigorous definition of the fractional Laplace operator, as we have anticipated in Section \ref{intro_sec}. Let
+\begin{align*}
+	\mathcal L^1_s(\RR) :=\left\{ u:\RR\longrightarrow\RR\,:\; u\textrm{ measurable },\;\int_{\RR}\frac{|u(x)|}{(1+|x|)^{1+2s}}\,dx<\infty\right\}.
+\end{align*}
+For any $u\in\mathcal L_s^1$ and $\varepsilon>0$ we set 
+\begin{align*}
+	(-d_x^2)^s_{\varepsilon} u(x) = \ccs\,\int_{|x,y|>\varepsilon}\frac{u(x)-u(y)}{|x-y|^{1+2s}}\,dy,\;\;\; x\in\RR.
+\end{align*}
+The fractional Laplacian is then defined by the following singular integral
+\begin{align}\label{fl}
+	\fl{s}{u}(x) = \ccs\,P.V.\,\int_{\RR}\frac{u(x)-u(y)}{|x-y|^{1+2s}}\,dy = \lim_{\varepsilon\to 0^+} (-d_x^2)^s_{\varepsilon} u(x), \;\;\; x\in\RR,
+\end{align}
+provided that the limit exists. 
+
+We notice that if $0<s<1/2$ and $u$ is smooth, for example bounded and Lipschitz continuous on $\RR$, then the integral in \eqref{fl} is in fact not really singular near $x$ (see e.g. \cite[Remark 3.1]{dihitchhiker}). Moreover, $\mathcal L_s^1(\RR)$ is the right space for which $v:= (-d_x^2)^s_{\varepsilon} u$ exists for every $\varepsilon > 0$, $v$ being also continuous at the continuity points of $u$.
+
+Let us now introduce the variational formulation associated to equation \eqref{PE}, which will be the starting point for the development of the FE approximation of the problem we are considering. That is, find $u\in H^s_0(-L,L)$ such that
+\begin{align*}
+	a(u,v) = \int_{-L}^L fv\,dx,	
+\end{align*}
+for all $v\in H_0^s(-L,L)$, where the bilinear form $a(\cdot,\cdot):H^s_0(-L,L)\times H^s_0(-L,L)\to \RR$ is given by
+\begin{align*}
+	a(u,v)=\frac{\ccs}{2} \int_{\RR}\int_{\RR}\frac{(u(x)-u(y))(v(x)-v(y))}{|x-y|^{1+2s}}\,dxdy.	
+\end{align*}
+Here, $H^s_0(-L,L)$ denotes the space 
+\begin{align*}
+	H^s_0(-L,L) :=\Big\{\, u\in H^s(\RR)\,:\,u=0 \textrm{ in } \RR\setminus(-L,L)\,\Big\}, 
+\end{align*}
+while with $H^s(\RR)$ we indicate the classical fractional Sobolev space of order $s$. We refer to \cite{dihitchhiker} for a complete description of these spaces.  
+
+Since the bilinear form $a$ is continuous and coercive, Lax-Milgram Theorem immediately implies existence and uniqueness of solutions to the Dirichlet problem \eqref{PE}. In more detail, if $f\in H^{-s}(-L,L)$, then \eqref{PE} admits a unique weak solution $u\in H_0^s(-L,L)$ (see, e.g., \cite[Proposition 2.1]{biccari2017local}). Here $H^{-s}(-L,L)$ stands for the dual space of $H^s_0(-L,L)$. Furthermore, in the literature it is possible to find improved regularity results for the solution to \eqref{PE}, both in H\"older and Sobolev spaces. The interested reader may refer, for instance, to \cite{acosta2017fractional,biccari2017local,leonori2015basic,ros2014dirichlet,ros2014extremal}.
+
+\subsection{Parabolic problem}
+
+As we mentioned in Section \ref{intro_sec}, the main goal of the present paper is to obtain a FE discretization of the fractional Laplacian. An application for this approximation will then be the numerical resolution of the fractional heat equation \eqref{heat_frac} and the associated control problem. Before doing that, let us recall the following definitions of controllability.
+
+\begin{definition}
+System \eqref{heat_frac} is said to be \textit{null-controllable} at time $T$ if, for any $z_0\in L^2(-1,1)$, there exists $g\in L^2(\omega\times(0,T))$ such that the corresponding solution $z$ satisfies 
+\begin{align*}
+	z(x,T)=0.
+\end{align*}
+
+\end{definition}
+
+\begin{definition}
+System \eqref{heat_frac} is said to be \textit{approximately controllable} at time $T$ if, for any $z_0,z_T\in L^2(-1,1)$ and any $\delta>0$, there exists $g\in L^2(\omega\times(0,T))$ such that the corresponding solution $z$ satisfies \begin{align*}
+	\norm{z(x,T)-z_T}{L^2(-1,1)}<\delta.
+\end{align*}
+\end{definition}
+
+Therefore, given any initial datum $z_0\in L^2(-1,1)$ we are interested in computing numerically the control function $g$ that drives the solution $z$ to zero in time $T$. Before describing the methodology that we shall adopt, we recall the existing theoretical results on the controllability of the fractional heat equation \eqref{heat_frac}. This will give us a hint about what we should expect from our simulations, and will provide a validation of the accuracy of our numerical method.
+
+First of all, it is worth to mention that the existence, uniqueness and regularity of the solutions to \eqref{heat_frac} has been studied by several authors. Among others, we mention the works \cite{biccari2017parabolic,fernandez2016boundary,leonori2015basic}. 
+
+Concerning now the control problem, we have to mention that, to the best of our knowledge, there are few results in the literature on the null-controllability of the fractional heat equation, and none of them is for a problem involving the fractional Laplacian in its integral form \eqref{fl}. The existing results, instead, deal with the \textit{spectral} definition of the fractional Laplace operator, which is given as follows.
+
+Let $\{\psi_k,\lambda_k\}_{k\in\NN}\subset H_0^1(-1,1)\times\RR^+$ be the set of normalized eigenfunctions and eigenvalues of the Laplace operator in $(-1,1)$ with homogeneous Dirichlet boundary conditions, so that $\{\psi_k\}_{k\in\NN}$ is an orthonormal basis of $L^2(-1,1)$ and         
+\begin{align*}
+	\begin{cases}
+		-d_x^2\psi_k =\lambda_k\psi_k, & x\in (-1,1), 
+		\\
+		\psi_k(-1)=\psi_k(1)=0.
+	\end{cases}
+\end{align*}
+
+Then, the \textit{spectral fractional Laplacian} $(-d_x^2)^s_S$ is defined by
+\begin{align}\label{fl_spec}
+	(-d_x^2)^s_S u(x) = \sum_{k\geq 1}\langle u,\psi_k\rangle \lambda_k^s\psi_k(x),
+\end{align}
+firstly for $u\in C_0^{\infty}(-1,1)$ and then for $u\in H_0^s(-1,1)$ employing a density argument.
+
+It is important to notice that the spectral fractional Laplacian and the fractional Laplacian defined as in \eqref{fl} are two different operators. Indeed, definition \eqref{fl_spec} depends on the choice of the domain (in this case, $(-1,1)$), while the integral definition does not. For a complete discussion on the differences of these two operators, we refer to \cite{servadei2014spectrum}.
+
+The fractional heat equation involving the operator $(-d_x^2)^s_S$ has been analyzed in \cite{micu2006controllability}, where the authors proved its null controllability, provided that $s>1/2$. For $s\leq 1/2$, instead, null controllability does not hold, not even for $T$ large. This negative result is based on the equivalence (consequence of M\"untz Theorem, see, e.g., \cite[Page 24]{schwartz1958etude}) between the controllability property (more specifically, the possibility of proving an observability inequality), and the following condition for the eigenvalues of the operator considered
+%
+\begin{align}\label{eigen_cond}
+	\sum_{k\geq 1} \frac{1}{\lambda_k}<\infty,
+\end{align} 
+%
+which is clearly not satisfied in the case of the spectral fractional Laplacian when $s\leq 1/2$, since in that case the eigenvalues are $\lambda_k = (k\pi)^{2s}$. Finally, in \cite{miller2006controllability}, the same result as in \cite{micu2006controllability} is obtained in a multi-dimensional setting, by means of a  \textit{spectral observability condition} for a negative self-adjoint operator, which allows to prove the null-controllability of the semi-group that it generates.
+
+Even if we are not aware of any controllability result, neither positive nor negative, for the parabolic equation involving the integral fractional Laplacian, at least in the one space dimension, these properties are easily achievable. In more detail, we have the following.
+
+\begin{proposition}
+For all $z_0\in L^2(-1,1)$ the parabolic problem \eqref{heat_frac} is null-controllable with a control function $g\in L^2(\omega\times(0,T))$ if and only if $s>1/2$.  
+\end{proposition}
+
+\begin{proof}
+First of all, multiplying \eqref{heat_frac} by $\varphi$ and integrating over $(-1,1)\times (0,T)$, it is straightforward to check that $z(x,T)=0$ if and only if 
+\begin{align}\label{control_id}
+	\int_0^T\int_{-1}^1 \varphi(x,t)g(x,t)\mathbf{1}_{\omega}(x)\,dxdt = -\int_{-1}^1 u_0(x)\varphi(x,0)\,dx,
+\end{align}
+for all $\varphi^T\in L^2(-1,1)$, where $\varphi(x,t)$ is the unique solution to the adjoint system
+\begin{align}\label{heat_frac_adj}
+	\begin{cases}
+		-\varphi_t + \fl{s}{\varphi} = 0, & (x,t)\in (-1,1)\times(0,T)
+		\\
+		\varphi = 0, & (x,t)\in [\,\RR\setminus(-1,1)\,]\times(0,T)
+		\\
+		\varphi(x,T) = \varphi^T(x), & x\in (-1,1).
+	\end{cases}
+\end{align}
+
+In turn, it is classical that \eqref{control_id} is equivalent to the existence of a constant $C>0$ such that the following observability inequality holds
+\begin{align}\label{obs}
+	\norm{\varphi(x,0)}{L^2(-1,1)}^2\leq C\int_0^T\left|\,\int_{-1}^1 \varphi(x,t)g(x,t)\mathbf{1}_{\omega}(x)\,dx\,\right|^2\,dt,
+\end{align}
+
+Notice that $\varphi$ can be written in terms of the basis of eigenfunctions $\{\varrho_k\}_{k\geq 1}$. Namely,
+\begin{align}\label{adj_sol}
+	\varphi(x,t) = \sum_{k\geq 1} \varphi_ke^{-\lambda_k(T-t)}\varrho_k(x), 
+\end{align}
+where $\varphi_k = \langle \varphi^T,\varrho_k\rangle$ and, for $k\geq 1$, $\varrho(x)$ are the solutions to the following eigenvalue problem 
+\begin{align*}
+	\begin{cases}
+		\fl{s}{\varrho_k} = \lambda_k\varrho_k, & x\in (-1,1), \;\; k\in\NN
+		\\
+		\varrho_k = 0, & x\in \,\RR\setminus(-1,1).
+	\end{cases}
+\end{align*}
+
+Now, plugging \eqref{adj_sol} into \eqref{obs}, using the orthonormality of the eigenfunctions $\varrho_k$ and employing the change of variables $T-t\mapsto t$, the observability inequality becomes 
+\begin{align}\label{obs_spectr}
+	\sum_{k\geq 1} |\varphi_k|^2e^{-2\lambda_k T} \leq C\int_0^T\left|\,\sum_{k\geq 1} \varphi_kg_k(t)e^{-\lambda_k t}\right|^2\,dt, 
+\end{align}
+where $g_k = \langle g\mathbf{1}_{\omega},\varrho_k\rangle$. 
+
+By means of M\"untz Theorem, inequalities of the form \eqref{obs_spectr} are well known to be true if and only if \eqref{eigen_cond} holds. On the other hand, according to \cite{kulczycki2010spectral,kwasnicki2012eigenvalues} we have 
+\begin{align*}
+	\lambda_k = \left(\frac{k\pi}{2}-\frac{(1-s)\pi}{4}\right)^{2s}+O\left(\frac{1}{k}\right).
+\end{align*}
+ 
+Therefore, we easily see that the condition \eqref{eigen_cond} is satisfied if and only if $s>1/2$. If $s\leq 1/2$, instead, the series diverges, since it behaves as an harmonic series. In conclusion, the observability inequality \eqref{obs} is proved when $s>1/2$, but it is false when $s\leq 1/2$. This concludes the proof. 
+\end{proof}
+
+Even if for $s\leq 1/2$ null controllability for \eqref{heat_frac} fails, we still have the following result of approximate controllability. 
+
+\begin{proposition}
+Let $s\in(0,1)$. For all $z_0\in L^2(-1,1)$, there exists a control function $g\in L^2(\omega\times(0,T))$ such that the unique solution $z$ to the parabolic problem \eqref{heat_frac} is approximately controllable.
+\end{proposition}
+
+\begin{proof}
+
+The result will be a consequence of the following unique continuation property for the solution to the adjoint equation \eqref{heat_frac_adj}
+
+\MyQuote{
+Given $s\in(0,1)$ and $\varphi^T_0\in L^2(-1,1)$, let $\varphi$ be the unique solution to the system \eqref{heat_frac_adj}. Let $\omega\subset (-1,1)$ be an arbitrary open set. If $\varphi = 0$ on $\omega\times(0,T)$, then $\varphi = 0$ on $(-1,1)\times(0,T)$.}
+
+Therefore, we are reduced to the proof of the property ($\mathcal P$). To this end, let us recall that $\varphi$ can be expressed in the form \eqref{adj_sol} and let us assume that 
+\begin{align}\label{uc}
+	\varphi=0 \textrm{ in } \omega\times(0,T). 
+\end{align}
+
+Let $\{\psi_{k_j}\}_{1\leq k\leq m_k}$ be an orthonormal basis of $\ker(\lambda_k-\fl{s}{})$. Then, \eqref{adj_sol} can be rewritten as
+\begin{align*}
+	\varphi(x,t) = \sum_{k\geq 1} \left(\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x)\right)e^{-\lambda_k(T-t)}, \;\;\; (x,t)\in (-1,1)\times(-\infty, T). 
+\end{align*}
+
+Let $z\in\CC$ with $\eta:=\Re(z)>0$ and let $N\in\NN$. Since the functions $\psi_{k_j}$, $1\leq j\leq m_k$, $1\leq k\leq N$ are orthonormal, we have that
+\begin{align*}
+	\norm{\sum_{k=1}^N \left(\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x)\right)e^{z(t-T)}e^{-\lambda_k(T-t)}}{L^2(-1,1)}^2 & \leq \sum_{k=1}^N \left(\sum_{j=1}^{m_k} |\varphi_{k_j}|^2\right)e^{2\eta(t-T)}e^{-2\lambda_k(T-t)}
+	\\
+	& \leq \sum_{k\geq 1} \left(\sum_{j=1}^{m_k} |\varphi_{k_j}|^2\right)e^{2\eta(t-T)}e^{-2\lambda_k(T-t)} \leq Ce^{2\eta(t-T)}\norm{\varphi^T}{L^2(-1,1)}^2.
+\end{align*}
+
+Hence, letting 
+\begin{align*}
+w_N(x,t):= \sum_{k=1}^N \left(\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x)\right)e^{z(t-T)}e^{-\lambda_k(T-t)},
+\end{align*}
+we have shown that $\norm{w_T(x,t)}{L^2(-1,1)}\leq Ce^{\eta(t-T)}\norm{\varphi^T}{L^2(-1,1)}$. Moreover, we have
+\begin{align*}
+	\int_{-\infty}^T e^{\eta(t-T)}\norm{\varphi^T}{L^2(-1,1)}\,dt = \frac{1}{\eta}\norm{\varphi^T}{L^2(-1,1)}\int_0^{+\infty} e^{-\tau}\,d\tau = \frac{1}{\eta}\norm{\varphi^T}{L^2(-1,1)}.
+\end{align*}
+
+Therefore, we can apply the Dominated Convergence Theorem, obtaining
+\begin{align}\label{dct_identity}
+	\lim_{N\to+\infty}\int_{-\infty}^T w_N(x,t)\,dt &= \int_{-\infty}^T\lim_{N\to+\infty} w_N(x,t)\,dt = \int_{-\infty}^T e^{z(t-T)} \sum_{k=1}^{+\infty} \left(\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x)\right)e^{-\lambda_k(T-t)}\,dt \notag
+	\\
+	&=\sum_{k=1}^{+\infty}\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x) \int_{-\infty}^T e^{z(t-T)}e^{-\lambda_k(T-t)}\,dt =\sum_{k=1}^{+\infty}\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x) \int_0^{+\infty} e^{-(z+\lambda_k)\tau}\,d\tau \notag
+	\\
+	&=\sum_{k=1}^{+\infty}\sum_{j=1}^{m_k} \frac{\varphi_{k_j}}{z+\lambda_k}\psi_{k_j}(x), \;\;\; x\in (-1,1)\;\Re(z)>0.
+\end{align} 
+
+It follows from \eqref{uc} and \eqref{dct_identity} that 
+\begin{align*}
+	\sum_{k=1}^{+\infty}\sum_{j=1}^{m_k} \frac{\varphi_{k_j}}{z+\lambda_k}\psi_{k_j}(x)=0, \;\;\; x\in\omega,\;\Re(z)>0.
+\end{align*}
+
+This holds for every $z\in\CC\setminus\{-\lambda_k\}_{k\in\NN}$, using the analytic continuation in $z$. Hence, taking a suitable small circle around $-\lambda_{\ell}$ not including $\{-\lambda_k\}_{k\neq\ell}$ and integrating on that circle we get that
+\begin{align*}
+	w_\ell:=\sum_{j=1}^{m_{\ell}} \varphi_{\ell_j}\psi_{\ell_j}(x)=0, \;\;\; x\in\omega.
+\end{align*}
+
+According to \cite[Theorem 1.4]{fall2014unique}, $\fl{s}{}$ has the unique continuation property in the sense that if $\lambda_k$ is an eigenvalue of $\fl{s}{}$ on (-1,1) with Dirichlet boundary conditions, and $(\fl{s}{}-\lambda_k)\varrho_k = 0$ in $(-1,1)$ with $\varrho_k = 0$ in $\omega$, then $\varrho_k = 0$ in $(-1,1)$. 
+This can applied to $w_{\ell}$, in order to conclude $w_{\ell} = 0$ in $(-1,1)$ for every $\ell$. Since $\{\psi_{\ell_j}\}_{1\leq j\leq m_{\ell}}$ are linearly independent in $L^2(-1,1)$, we get $\varphi_{\ell_j} = 0$, $1\leq j\leq m_k$, $\ell\in\NN$. It follows that $\varphi^T=0$ and hence, $\varphi=0$ in $(-1,1)\times(0,T)$, meaning that $\varphi$ enjoys the property $(\mathcal{P})$. As an immediate consequence, we have that our original equation \eqref{heat_frac} is approximately controllable. This last fact being classical (see, e.g., \cite[Theorem 2.5]{keyantuo2016interior}), we will leave the details to the reader. Our proof is then concluded. 
+\end{proof}
+
+

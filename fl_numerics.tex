@@ -32,7 +32,7 @@
 \usepackage[pagewise]{lineno}
 \DeclareMathAlphabet{\mathbbm}{U}{bbm}{m}{n}% from bbm.sty
 %
-\input fig4tex.tex
+\input{fig4tex.tex}
 %
 \allowdisplaybreaks
 \DisableLigatures{encoding = *, family = * }
@@ -54,7 +54,7 @@
 \numberwithin{definition}{section}
 %
 \newcommand{\norm}[2]{{\left\|#1\right\|}_{#2}}
-\newcommand{\fl}[2]{(-d_x^2)^{#1}#2}
+\newcommand{\fl}[2]{(-d_x^{\,2})^{#1}#2}
 \newcommand{\rfl}[2]{A^{#1}_{\Omega}#2}
 \newcommand{\hp}[1]{\hphantom{#1}}
 \newcommand{\cns}{c_{N,s}}
@@ -77,6 +77,8 @@
 \newcommand{\TT}{\mathbf{T}}
 \newcommand\inter[1]{\llbracket #1\rrbracket}
 \newcommand\mesh{\mathfrak{M}}
+\newcommand{\rouge}[1]{\color{red}#1\color{black}}
+
 %
 \usepackage{tikz}
 \usepackage{pgfplots}
@@ -125,9 +127,9 @@
 \newcommand{\MyQuote}[1]{\vspace{0.5cm}%\refstepcounter{quotecount}{1}%
      \parbox{12cm}{\em #1}\hspace*{1cm}($\mathcal{P}$)\\[0.5cm]}
 %
-%%\input{macros_franck.tex}
+%\input{macros_franck.tex}
 %
-\title[FE approximation of the 1-d fractional Poisson equation]{A Finite Element approximation of the one-dimensional fractional Poisson equation with applications to numerical control}
+\title[Numerical controllability fractional heat equation]{Numerical controllability of the one-dimensional fractional heat equation}
 %
 \author{U.~Biccari}
 \address{Umberto Biccari, DeustoTech, University of Deusto, 48007 Bilbao, Basque Country, Spain.}
@@ -150,15 +152,14 @@
 \maketitle
 
 \begin{abstract}
-We present a finite element (FE) scheme for the numerical approximation of the solution to a non-local Poisson equation involving the one-dimensional fractional Laplacian $\fl{s}{}$ on the interval $(-L,L)$. In particular, we include the complete computations for obtaining the stiffness matrix, starting from the variational formulation of the problem. The problem being one-dimensional, the values of the matrix can be explicitly calculated, without need of any numerical integration, thus obtaining an algorithm which is very efficient in terms of the computational cost.
-As an application, we analyze the corresponding parabolic equation from the point of view of controllability properties, employing the penalized Hilbert Uniqueness Method (HUM) for computing the numerical approximation of the null-control, acting from an open subset $\omega\subset(-L,L)$. In accordance to the theory, our numerical simulations show: (1) that the method solves the elliptic equation with an acceptable approximation in the natural functional setting, (2) that the parabolic problem is null-controllable for $s>1/2$ and (3) that for $s\leq 1/2$ we only have approximate controllability. 
+We analyze the controllability problem for a one-dimensional heat equation involving the fractional Laplacian $\fl{s}{}$ on the interval $(-1,1)$. Using classical results and techniques, we show that, acting from an open subset $\omega\subset(-1,1)$, the problem is null-controllable for $s>1/2$ and that for $s\leq 1/2$ we only have approximate controllability. Moreover, we deal with the numerical computation of the control, employing the penalized Hilbert Uniqueness Method (HUM) and a finite element (FE) scheme for the approximation of the solution to the corresponding elliptic equation. We present several experiments confirming the expected controllability properties.
 \end{abstract}
 
 \input{intro.tex}
 \input{theoretical.tex}
-\input{fe.tex}
-\input{numerical.tex}
-\input{appendix.tex}
+%\input{fe.tex}
+%\input{numerical.tex}
+%\input{appendix.tex}
 
 \section*{Acknowledgements}
 The authors wish to acknowledge F. Boyer (Institut de Math\'ematiques de Toulouse) for his contribution in the development of the numerical implementation of the control problem. Moreover, a special thanks goes to J. Loh\'eac (Laboratoire de Sciences Num\'eriques de Nantes), for helping with some computations in Section \ref{fe_sec}.  

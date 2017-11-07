@@ -61,9 +61,9 @@ a(u,v)=\frac{\ccs}{2} \int_{\RR}\int_{\RR}\frac{(u(x)-u(y))(v(x)-v(y))}{|x-y|^{1
 
 Since the bilinear form $a$ is continuous and coercive, Lax-Milgram Theorem immediately implies existence and uniqueness of solutions to the Dirichlet problem \eqref{PE}. In more detail, if $f\in H^{-s}(-L,L)$, then \eqref{PE} admits a unique weak solution $u\in H_0^s(-L,L)$ (see, e.g., \cite[Proposition 2.1]{biccari2017local}). Furthermore, in the literature it is possible to find improved regularity results for the solution to \eqref{PE}, both in H\"older and Sobolev spaces. The interested reader may refer, for instance, to \cite{acosta2017fractional,biccari2017local,leonori2015basic,ros2014dirichlet,ros2014extremal}.
 
-\subsection{Parabolic problem}
+Let us now discuss the parabolic equation \eqref{heat_frac}. First of all, we mention that the issues of existence, uniqueness and regularity of the solutions have been studied by several authors. Among others, we mention the works \cite{biccari2017parabolic,fernandez2016boundary,leonori2015basic}. In particular, in \cite[Theorem 26]{leonori2015basic} it is showed that, assuming $z_0\in L^2(\Omega)$ and $g\in L^2(0,T;H^{-s}(\Omega))$, then equation \eqref{heat_frac} admits a unique weak solution $z\in L^2(0,T;H_0^s(\Omega))\cap C([0,T];L^2(\Omega))$ with $z_t\in L^2(0,T;H^{-s}(\Omega))$. Notice that, taking as in our case $g\in L^2(\omega\times(0,T))$, the same result holds due to the continuous injection of $L^2$ into $H^{-s}$.
 
-As we mentioned in Section \ref{intro_sec}, the main goal of the present paper is to obtain a FE discretization of the fractional Laplacian. An application for this approximation will then be the numerical resolution of the fractional heat equation \eqref{heat_frac} and the associated control problem. Before doing that, let us recall the following definitions of controllability.
+Before giving the proof of Theorems \ref{null_control_thm} and \ref{approx_control_thm}, we recall the definitions of null and approximate controllability.
 
 \begin{definition}
 System \eqref{heat_frac} is said to be \textit{null-controllable} at time $T$ if, for any $z_0\in L^2(-1,1)$, there exists $g\in L^2(\omega\times(0,T))$ such that the corresponding solution $z$ satisfies 
@@ -79,11 +79,7 @@ System \eqref{heat_frac} is said to be \textit{approximately controllable} at ti
 \end{align*}
 \end{definition}
 
-Therefore, given any initial datum $z_0\in L^2(-1,1)$ we are interested in computing numerically the control function $g$ that drives the solution $z$ to zero in time $T$. Before describing the methodology that we shall adopt, we recall the existing theoretical results on the controllability of the fractional heat equation \eqref{heat_frac}. This will give us a hint about what we should expect from our simulations, and will provide a validation of the accuracy of our numerical method.
-
-First of all, it is worth to mention that the existence, uniqueness and regularity of the solutions to \eqref{heat_frac} has been studied by several authors. Among others, we mention the works \cite{biccari2017parabolic,fernandez2016boundary,leonori2015basic}. 
-
-Concerning now the control problem, we have to mention that, to the best of our knowledge, there are few results in the literature on the null-controllability of the fractional heat equation, and none of them is for a problem involving the fractional Laplacian in its integral form \eqref{fl}. The existing results, instead, deal with the \textit{spectral} definition of the fractional Laplace operator, which is given as follows.
+We already mentioned that, to the best of our knowledge, there are no results in the literature on the null-controllability of the fractional heat equation involving the integral operator \eqref{fl}. The existing ones deal with the \textit{spectral} definition of the fractional Laplace operator, which is given as follows.
 
 Let $\{\psi_k,\lambda_k\}_{k\in\NN}\subset H_0^1(-1,1)\times\RR^+$ be the set of normalized eigenfunctions and eigenvalues of the Laplace operator in $(-1,1)$ with homogeneous Dirichlet boundary conditions, so that $\{\psi_k\}_{k\in\NN}$ is an orthonormal basis of $L^2(-1,1)$ and         
 \begin{align*}
@@ -225,6 +221,8 @@ This holds for every $z\in\CC\setminus\{-\lambda_k\}_{k\in\NN}$, using the analy
 According to \cite[Theorem 1.4]{fall2014unique}, $\fl{s}{}$ has the unique continuation property in the sense that if $\lambda_k$ is an eigenvalue of $\fl{s}{}$ on (-1,1) with Dirichlet boundary conditions, and $(\fl{s}{}-\lambda_k)\varrho_k = 0$ in $(-1,1)$ with $\varrho_k = 0$ in $\omega$, then $\varrho_k = 0$ in $(-1,1)$. 
 This can applied to $w_{\ell}$, in order to conclude $w_{\ell} = 0$ in $(-1,1)$ for every $\ell$. Since $\{\psi_{\ell_j}\}_{1\leq j\leq m_{\ell}}$ are linearly independent in $L^2(-1,1)$, we get $\varphi_{\ell_j} = 0$, $1\leq j\leq m_k$, $\ell\in\NN$. It follows that $\varphi^T=0$ and hence, $\varphi=0$ in $(-1,1)\times(0,T)$, meaning that $\varphi$ enjoys the property $(\mathcal{P})$. As an immediate consequence, we have that our original equation \eqref{heat_frac} is approximately controllable. This last fact being classical (see, e.g., \cite[Theorem 2.5]{keyantuo2016interior}), we will leave the details to the reader. Our proof is then concluded. 
 \end{proof}
+
+Therefore, given any initial datum $z_0\in L^2(-1,1)$ we are interested in computing numerically the control function $g$ that drives the solution $z$ to zero in time $T$. Before describing the methodology that we shall adopt, we recall the existing theoretical results on the controllability of the fractional heat equation \eqref{heat_frac}. This will give us a hint about what we should expect from our simulations, and will provide a validation of the accuracy of our numerical method.
 
 
 

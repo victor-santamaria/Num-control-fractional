@@ -1,5 +1,5 @@
 \section{Introduction and main results}\label{intro_sec}
-Let $\omega\subset (-1,1)$ be an open and nonempty subset. In this work, we analyze controllability properties for the following nonlocal one-dimensional heat equation 
+Let $\omega\subset (-1,1)$ be an open and nonempty subset. In this work, we consider the following nonlocal one-dimensional heat equation defined on the domain $(-1,1)\times(0,T)$
 \begin{align}\label{heat_frac}
 	\begin{cases}
 		z_t + \fl{s}{z} = g\mathbf{1}_{\omega},\quad & (x,t)\in (-1,1)\times(0,T)
@@ -9,9 +9,7 @@ Let $\omega\subset (-1,1)$ be an open and nonempty subset. In this work, we anal
 		z(x,0)=z_0(x), & x\in (-1,1),
 	\end{cases}
 \end{align} 
-where $z_0\in L^2(-1,1)$ is a given initial datum. In more detail, we are interested in the resolution of the following control problem: given any $T>0$, find a control function $g\in L^2(\omega\times(0,T))$ such that the corresponding solution to \eqref{heat_frac} satisfies $z(x,T)=0$. 
-
-In \eqref{heat_frac}, for all $s\in(0,1)$, $\fl{s}{}$ denotes the one-dimensional fractional Laplace operator, which is defined as the following singular integral
+where $z_0\in L^2(-1,1)$ is a given initial datum. In \eqref{heat_frac}, for all $s\in(0,1)$, $\fl{s}{}$ denotes the one-dimensional fractional Laplace operator, which is defined as the following singular integral
 \begin{align}\label{fl_intro}
 	\fl{s}{u}(x) = \ccs\,P.V.\,\int_{\RR}\frac{u(x)-u(y)}{|x-y|^{1+2s}}\,dy. 
 \end{align}
@@ -28,6 +26,10 @@ significantly better description than a PDE of the problem one wants to analyze.
 Among others, we mention applications in turbulence (\cite{bakunin2008turbulence}), anomalous transport and diffusion (\cite{bologna2000anomalous,meerschaert2012fractional}), elasticity (\cite{dipierro2015dislocation}), image processing (\cite{gilboa2008nonlocal}), porous media flow (\cite{vazquez2012nonlinear}), wave propagation in heterogeneous high contrast media (\cite{zhu2014modeling}). Also, it is well known that the fractional Laplacian is the generator of s-stable processes, and it is often used in stochastic models with applications, for instance, in mathematical finance (\cite{levendorskii2004pricing,pham1997optimal}).
 
 One of the main differences between these non-local models and classical Partial Differential Equations is that the fulfillment of a non-local equation at a point involves the values of the function far away from that point.
+
+In the present paper, we are interested in studying control properties for equation \eqref{heat_frac}. In more detail, we aim to give an answer to the following question:
+
+\NewQuote{given any $T>0$ and any initial datum $z_0\in L^2(-1,1)$, can we find a control function $g\in L^2(\omega\times(0,T))$ such that the corresponding solution to \eqref{heat_frac} satisfies $z(x,T)=0$?} 
 
 It is well-known that the classical local heat equation (as well as many other general variants) is null-controllable in any time $T>0$ (see, e.g., \cite{fattorini1971exact,fursikov1996controllability,lebeau1995controle}). Nevertheless, to the best of our knowledge, there are few results in the literature on the null-controllability of the fractional heat equation, and none of them is for a problem involving the fractional Laplacian in its integral form \eqref{fl_intro}. The existing results (\cite{micu2006controllability,miller2006controllability}), instead, deal with the so-called \textit{spectral} fractional Laplace operator, whose definition will be given later. 
 

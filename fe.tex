@@ -21,7 +21,7 @@ Notice that we have $y_{0,y_0}(t)= e^{-tA}y_0$. Moreover, for simplicity, the so
 \end{align*} 
 The linear operator $\mathcal{L}_T(\cdot|\cdot)$ is then continuous from $L^2(0,T;U)\times E$ into $E$.
 
-In the framework of both controllability notions that we introduced in Section \ref{theor_sec}, if one control exists it is certainly not unique. In the penalized version of the HUM, we look for a control that is solution to a suitable optimization problem. In particular, we for any $\varepsilon>0$, we shall find
+In the framework of both controllability notions that we introduced in Section \ref{theor_sec}, if one control exists it is certainly not unique. In the penalized version of the HUM, we look for a control that is solution to a suitable optimization problem. In particular, for any $\varepsilon>0$, we shall find
 
 \begin{align}\label{min_ve}
 	v_\varepsilon=\min_{v\in L^2(0,T;U)} F_\varepsilon (v)
@@ -121,7 +121,7 @@ This fact will be confirmed by the numerical simulations that we are going to pr
 
 
 \subsection{Finite element approximation}%\label{fe_ell_sec}
-According to the formulation of systems \eqref{frac_heat_num} and \eqref{frac_adj_num}, in order to solve numerically our control problem a proper approximation $\mathcal A_h$ of the operator $\fl{s}{}$ is needed. Furthermore, observe that, for every every time step $n$, \eqref{frac_heat_num} and \eqref{frac_adj_num} are actually discrete elliptic equations of the form
+According to the formulation of systems \eqref{frac_heat_num} and \eqref{frac_adj_num}, in order to solve numerically our control problem, a proper approximation $\mathcal A_h$ of the operator $\fl{s}{}$ is needed. Furthermore, observe that, for every every time step $n$, \eqref{frac_heat_num} and \eqref{frac_adj_num} are actually discrete elliptic equations of the form
 \begin{align*}
 	\left(I+\delta t\mathcal M_h^{-1}\mathcal A_h\right)u_h = f_h.
 \end{align*}   

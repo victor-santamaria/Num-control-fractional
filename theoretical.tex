@@ -22,44 +22,44 @@ We notice that if $0<s<1/2$ and $u$ is a smooth function, for example bounded an
 
 It is by now well-known (see, e.g., \cite{dihitchhiker}) that the natural functional setting for problems involving the Fractional Laplacian is the one of the fractional Sobolev spaces. Since these spaces are not so familiar as the classical integral order ones, for the sake of completeness, we recall here their definition. 
 
-Given $s\in(0,1)$, the fractional Sobolev space $H^s(-L,L)$ is defined as
+Given $s\in(0,1)$, the fractional Sobolev space $H^s(-1,1)$ is defined as
 \begin{align*}
-	H^s(-L,L):= \left\{u\in L^2(-L,L)\,:\, \frac{|u(x)-u(y)|}{|x-y|^{\frac 12+s}}\in L^2\Big((-L,L)^2\Big)\right\}.
+	H^s(-1,1):= \left\{u\in L^2(-1,1)\,:\, \frac{|u(x)-u(y)|}{|x-y|^{\frac 12+s}}\in L^2\Big((-1,1)\times(-1,1)\Big) \right\}.
 \end{align*}
 
 It is classical that this is a Hilbert space, endowed with the norm (derived from the scalar product)
 \begin{align*}
-	\norm{u}{H^s(-L,L)} := \left[\norm{u}{L^2(-L,L)}^2 + |u|_{H^s(-L,L)}^2\right]^{\frac 12},
+	\norm{u}{H^s(-1,1)} := \left[\norm{u}{L^2(-1,1)}^2 + |u|_{H^s(-1,1)}^2\right]^{\frac 12},
 \end{align*}
 where the term 
 \begin{align*}
-|u|_{H^s(-L,L)}:= \left(\int_{-L}^L\int_{-L}^L \frac{|u(x)-u(y)|^2}{|x-y|^{1+2s}}\,dxdy\right)^{\frac 12}
+	|u|_{H^s(-1,1)}:= \left(\int_{-1}^1\int_{-1}^1 \frac{|u(x)-u(y)|^2}{|x-y|^{1+2s}}\,dxdy\right)^{\frac 12}
 \end{align*}
 is the so-called Gagliardo seminorm of $u$. We set 
 \begin{align*}
-H_0^s(-L,L):= \overline{C_0^\infty(-L,L)}^{\,H^s(-L,L)}
+H_0^s(-1,1):= \overline{C_0^\infty(-1,1)}^{\,H^s(-1,1)}
 \end{align*}
-the closure of the continuous infinitely differentiable functions compactly supported in $(-L,L)$ with respect to the $H^s(-L,L)$-norm. The following facts are well-known.
+the closure of the continuous infinitely differentiable functions compactly supported in $(-1,1)$ with respect to the $H^s(-1,1)$-norm. The following facts are well-known.
 \begin{itemize}
-	\item[$\bullet$] For $0<s\leq\frac 12$, the identity $H_0^s(-L,L) = H^s(-L,L)$ holds. This is because, in this case, the $C_0^\infty(-L,L)$ functions are dense in $H^s(-L,L)$ (see, e.g., \cite[Theorem 11.1]{jllions1972non}).
+	\item[$\bullet$] For $0<s\leq\frac 12$, the identity $H_0^s(-1,1) = H^s(-1,1)$ holds. This is because, in this case, the $C_0^\infty(-1,1)$ functions are dense in $H^s(-1,1)$ (see, e.g., \cite[Theorem 11.1]{jllions1972non}).
 	
-	\item[$\bullet$] For $\frac 12<s<1$, we have $H_0^s(-L,L)=\left\{ u\in H^s(\RR)\,:\,u=0\textrm{ in } \RR\setminus (-L,L)\right\}$ (\cite{fiscella2015density}).
+	\item[$\bullet$] For $\frac 12<s<1$, we have $H_0^s(-1,1)=\left\{ u\in H^s(\RR)\,:\,u=0\textrm{ in } \RR\setminus (-1,1)\right\}$ (\cite{fiscella2015density}).
 \end{itemize}
 
-Finally, in what follows we will indicate with $H^{-s}(-L,L)=\left(H^s(-L,L)\right)'$ the dual space of $H^s(-L,L)$ with respect tot the pivot space $L^2(-L,L)$.
+Finally, in what follows we will indicate with $H^{-s}(-1,1)=\left(H^s(-1,1)\right)'$ the dual space of $H^s(-1,1)$ with respect tot the pivot space $L^2(-1,1)$.
 
 A more exhaustive description of fractional Sobolev spaces and of their properties can be found in several classical references (see, e.g., \cite{adams2003sobolev,dihitchhiker,jllions1972non}).
 
-Let us now introduce the variational formulation associated to equation \eqref{PE}. That is, find $u\in H^s_0(-L,L)$ such that
+Let us now introduce the variational formulation associated to equation \eqref{PE}. That is, find $u\in H^s_0(-1,1)$ such that
 \begin{align*}
-a(u,v) = \int_{-L}^L fv\,dx,	
+	a(u,v) = \int_{-1}^1 fv\,dx,	
 \end{align*}
-for all $v\in H_0^s(-L,L)$, where the bilinear form $a(\cdot,\cdot):H^s_0(-L,L)\times H^s_0(-L,L)\to \RR$ is given by
-\begin{align*}
-a(u,v)=\frac{\ccs}{2} \int_{\RR}\int_{\RR}\frac{(u(x)-u(y))(v(x)-v(y))}{|x-y|^{1+2s}}\,dxdy.	
-\end{align*}
+for all $v\in H_0^s(-1,1)$, where the bilinear form $a(\cdot,\cdot):H^s_0(-1,1)\times H^s_0(-1,1)\to \RR$ is given by
+\begin{align}\label{bilinear}
+	a(u,v)=\frac{\ccs}{2} \int_{\RR}\int_{\RR}\frac{(u(x)-u(y))(v(x)-v(y))}{|x-y|^{1+2s}}\,dxdy.	
+\end{align}
 
-Since the bilinear form $a$ is continuous and coercive, Lax-Milgram Theorem immediately implies existence and uniqueness of solutions to the Dirichlet problem \eqref{PE}. In more detail, if $f\in H^{-s}(-L,L)$, then \eqref{PE} admits a unique weak solution $u\in H_0^s(-L,L)$ (see, e.g., \cite[Proposition 2.1]{biccari2017local}). Furthermore, in the literature it is possible to find improved regularity results for the solution to \eqref{PE}, both in H\"older and Sobolev spaces. The interested reader may refer, for instance, to \cite{acosta2017fractional,biccari2017local,leonori2015basic,ros2014dirichlet,ros2014extremal}.
+Since the bilinear form $a$ is continuous and coercive, Lax-Milgram Theorem immediately implies existence and uniqueness of solutions to the Dirichlet problem \eqref{PE}. In more detail, if $f\in H^{-s}(-1,1)$, then \eqref{PE} admits a unique weak solution $u\in H_0^s(-1,1)$ (see, e.g., \cite[Proposition 2.1]{biccari2017local}). Furthermore, in the literature it is possible to find improved regularity results for the solution to \eqref{PE}, both in H\"older and Sobolev spaces. The interested reader may refer, for instance, to \cite{acosta2017fractional,biccari2017local,leonori2015basic,ros2014dirichlet,ros2014extremal}.
 
 Let us now discuss the parabolic equation \eqref{heat_frac}. First of all, we mention that the issues of existence, uniqueness and regularity of the solutions have been studied by several authors. Among others, we mention the works \cite{biccari2017parabolic,fernandez2016boundary,leonori2015basic}. In particular, in \cite[Theorem 26]{leonori2015basic} it is showed that, assuming $z_0\in L^2(\Omega)$ and $g\in L^2(0,T;H^{-s}(\Omega))$, then equation \eqref{heat_frac} admits a unique weak solution $z\in L^2(0,T;H_0^s(\Omega))\cap C([0,T];L^2(\Omega))$ with $z_t\in L^2(0,T;H^{-s}(\Omega))$. Notice that taking as in our case $g\in L^2(\omega\times(0,T))$, the same result holds due to the continuous injection of $L^2$ into $H^{-s}$.
 

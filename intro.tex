@@ -29,12 +29,12 @@ Among others, we mention applications in turbulence (\cite{bakunin2008turbulence
 
 One of the main differences between these non-local models and classical Partial Differential Equations is that the fulfillment of a non-local equation at a point involves the values of the function far away from that point.
 
-It is well-known that the classical local heat equation (as well as many more general variants) is null-controllable in any time $T>0$ (see, e.g., \cite{fattorini1971exact,fursikov1996controllability,lebeau1995controle}). Nevertheless, to the best of our knowledge, there are few results in the literature on the null-controllability of the fractional heat equation, and none of them is for a problem involving the fractional Laplacian in its integral form \eqref{fl_intro}. The existing results (\cite{micu2006controllability,miller2006controllability}), instead, deal with the so-called \textit{spectral} fractional Laplace operator, whose definition will be given later. 
+It is well-known that the classical local heat equation (as well as many other general variants) is null-controllable in any time $T>0$ (see, e.g., \cite{fattorini1971exact,fursikov1996controllability,lebeau1995controle}). Nevertheless, to the best of our knowledge, there are few results in the literature on the null-controllability of the fractional heat equation, and none of them is for a problem involving the fractional Laplacian in its integral form \eqref{fl_intro}. The existing results (\cite{micu2006controllability,miller2006controllability}), instead, deal with the so-called \textit{spectral} fractional Laplace operator, whose definition will be given later. 
 
 In this paper, we deal with the controllability of \eqref{heat_frac}, both from the theoretical and the numerical point of view. Employing spectral analysis techniques based on the works \cite{kulczycki2010spectral,kwasnicki2012eigenvalues}, the first main result that we obtain is the following
 
 \begin{theorem}\label{null_control_thm}
-Given any $z_0\in L^2(-1,1)$ the parabolic problem \eqref{heat_frac} is null-controllable at time $T>0$ with a control function $g\in L^2(\omega\times(0,T))$ if and only if $s>1/2$.  
+Given any $z_0\in L^2(-1,1)$, the parabolic problem \eqref{heat_frac} is null-controllable at time $T>0$ with a control function $g\in L^2(\omega\times(0,T))$ if and only if $s>1/2$.  
 \end{theorem}
 
 Furthermore, even if for $s\leq 1/2$ null controllability for \eqref{heat_frac} fails, we still have the following result of approximate controllability, as a consequence of unique continuation properties for the fractional Laplace operator (\cite{fall2014unique}). 
@@ -43,11 +43,9 @@ Furthermore, even if for $s\leq 1/2$ null controllability for \eqref{heat_frac} 
 Let $s\in(0,1)$. Given any $z_0\in L^2(-1,1)$, there exists a control function $g\in L^2(\omega\times(0,T))$ such that the unique solution $z$ to the parabolic problem \eqref{heat_frac} is approximately controllable at time $T>0$.
 \end{theorem}
 
-Theorems \ref{null_control_thm} and \eqref{approx_control_thm} will then find a confirmation in the study of the corresponding numerical control problem. With this purpose, we will employ the penalized Hilbert Uniqueness Method, which relies on some classical works of Glowinski and Lions (\cite{glowinski1995exact,glowinski2008exact}). 
+Theorems \ref{null_control_thm} and \eqref{approx_control_thm} will then find a confirmation in the study of the corresponding numerical control problem. For this purpose, we will employ the penalized Hilbert Uniqueness Method, which relies on some classical works of Glowinski and Lions (\cite{glowinski1995exact,glowinski2008exact}). This method is very general and it can be applied to a broad class of PDE control problems, see, for instance, \cite{boyer2013penalised,boyer2017insensitizing,boyer2014approximate,khodja2017partial}. Unlike previous works, where local problems are studied, when using the HUM methodology for treating a nonlocal equation as \eqref{heat_frac}, new issues arise related in the discretization of the control problem. 
 
-Notice that this method is very general, and it may by applied to a broad class of PDEs control problems (\cite{boyer2013penalised,boyer2017insensitizing,boyer2014approximate,khodja2017partial}). When using it for treating a nonlocal problem as \eqref{heat_frac}, new issues arise related to the discretization of the corresponding elliptic problem.    
-
-In this framework, a preliminary step for the for the resolution of the numerical control problem will be a finite element (FE)  approximation of the solution to the following non-local Poisson equation
+Within this framework, for the resolution of the numerical control problem, we will need a finite element (FE)  approximation of the solution to the following non-local Poisson equation
 \begin{align}\label{PE}
 	\begin{cases}
 		\fl{s}{u} = f, & x\in(-L,L)

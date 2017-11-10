@@ -20,7 +20,7 @@ provided that the limit exists.
 
 We notice that if $0<s<1/2$ and $u$ is a smooth function, for example bounded and Lipschitz continuous on $\RR$, then the integral in \eqref{fl} is in fact not really singular near $x$ (see e.g. \cite[Remark 3.1]{dihitchhiker}). Moreover, $\mathcal L_s^1(\RR)$ is the right space for which $v:= (-d_x^{\,2})^s_{\varepsilon}\, u$ exists for every $\varepsilon > 0$, $v$ being also continuous at the continuity points of $u$.
 
-It is by now well-known (see, e.g., \cite{dihitchhiker}) that the natural functional setting for problems involving the Fractional Laplacian is the one of the fractional Sobolev spaces. Since these spaces are not so familiar as the classical integral order ones, for the sake of completeness, we recall here their definition. 
+It is by now well-known (see, e.g., \cite{dihitchhiker}) that the natural functional setting for problems involving the Fractional Laplacian is the one of the fractional Sobolev spaces. Since these spaces are not as familiar as the classical integral order ones, for the sake of completeness, we recall here their definition. 
 
 Given $s\in(0,1)$, the fractional Sobolev space $H^s(-1,1)$ is defined as
 \begin{align*}
@@ -97,11 +97,11 @@ firstly for $u\in C_0^{\infty}(-1,1)$ and then for $u\in H_0^s(-1,1)$ employing 
 
 It is important to notice that the spectral fractional Laplacian and the fractional Laplacian defined as in \eqref{fl} are two different operators. For instance, definition \eqref{fl_spec} depends on the choice of the domain (in this case, $(-1,1)$), while the integral definition does not. For a complete discussion on the differences of these two operators, we refer to \cite{servadei2014spectrum}.
 
-The control problem for the fractional heat equation involving the operator $(-d_x^{\,2})^s_S$ has been analyzed in \cite{micu2006controllability}, where the authors proved null controllability provided that $s>1/2$. For $s\leq 1/2$, instead, null controllability does not hold, not even for $T$ large. This negative result is based on the equivalence (consequence of M\"untz Theorem, see, e.g., \cite[Page 24]{schwartz1958etude}) between the controllability property (more specifically, the possibility of proving an observability inequality), and the following condition for the eigenvalues of the operator considered
+The control problem for the fractional heat equation involving the operator $(-d_x^{\,2})^s_S$ has been analyzed in \cite{micu2006controllability}, where the authors proved null controllability provided that $s>1/2$. For $s\leq 1/2$, instead, null controllability does not hold, not even for $T$ large. This negative result is based on the equivalence (consequence of M\"untz Theorem, see, e.g., \cite[Page 24]{schwartz1958etude}) between the controllability property (more specifically, the possibility of proving an observability inequality), and the following condition for the eigenvalues of the considered operator 
 \begin{align}\label{eigen_cond}
 	\sum_{k\geq 1} \frac{1}{\lambda_k}<\infty,
 \end{align} 
 which is clearly not satisfied for the spectral fractional Laplacian when $s\leq 1/2$, since in that case the eigenvalues are $\lambda_k = (k\pi)^{2s}$. Finally, in \cite{miller2006controllability}, the same result as in \cite{micu2006controllability} is obtained in a multi-dimensional setting, by means of a  \textit{spectral observability condition} for a negative self-adjoint operator, which allows to prove the null-controllability of the semi-group that it generates.
 
-As we anticipated in Section \ref{intro_sec}, the same null controllability result holds also for the parabolic equation \eqref{heat_frac}. This is obtained by means of classical tools (\cite{fattorini1971exact}), as well as explicit approximations of the eigenvalues and the eigenfunctions the fractional Laplacian with homogeneous Dirichlet boundary conditions. 
+As we anticipated in Section \ref{intro_sec}, the same null controllability result holds for the parabolic equation \eqref{heat_frac}. This will be obtained by means of classical tools (\cite{fattorini1971exact}) and by an explicit approximations of the eigenvalues and the eigenfunctions the fractional Laplacian with homogeneous Dirichlet boundary conditions. 
 

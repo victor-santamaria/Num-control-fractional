@@ -39,42 +39,32 @@ is the so-called Gagliardo seminorm of $u$. We set
 \begin{align*}
 H_0^s(-1,1):= \overline{C_0^\infty(-1,1)}^{\,H^s(-1,1)}
 \end{align*}
-the closure of the continuous infinitely differentiable functions compactly supported in $(-1,1)$ with respect to the $H^s(-1,1)$-norm. The following facts are well-known.
+the closure of the continuous infinitely differentiable functions with compact support in $(-1,1)$ with respect to the $H^s(-1,1)$-norm. The following facts are well-known.
 \begin{itemize}
 	\item[$\bullet$] For $0<s\leq\frac 12$, the identity $H_0^s(-1,1) = H^s(-1,1)$ holds. This is because, in this case, the $C_0^\infty(-1,1)$ functions are dense in $H^s(-1,1)$ (see, e.g., \cite[Theorem 11.1]{jllions1972non}).
 	
 	\item[$\bullet$] For $\frac 12<s<1$, we have $H_0^s(-1,1)=\left\{ u\in H^s(\RR)\,:\,u=0\textrm{ in } \RR\setminus (-1,1)\right\}$ (\cite{fiscella2015density}).
 \end{itemize}
 
-Finally, in what follows we will indicate with $H^{-s}(-1,1)=\left(H^s(-1,1)\right)'$ the dual space of $H^s(-1,1)$ with respect tot the pivot space $L^2(-1,1)$.
+Finally, in what follows we will indicate with $H^{-s}(-1,1)=\left(H^s(-1,1)\right)'$ the dual space of $H^s(-1,1)$ with respect to the pivot space $L^2(-1,1)$.
 
 A more exhaustive description of fractional Sobolev spaces and of their properties can be found in several classical references (see, e.g., \cite{adams2003sobolev,dihitchhiker,jllions1972non}).
-
-Let us now introduce the variational formulation associated to equation \eqref{PE}. That is, find $u\in H^s_0(-1,1)$ such that
-\begin{align*}
-	a(u,v) = \int_{-1}^1 fv\,dx,	
-\end{align*}
-for all $v\in H_0^s(-1,1)$, where the bilinear form $a(\cdot,\cdot):H^s_0(-1,1)\times H^s_0(-1,1)\to \RR$ is given by
-\begin{align}\label{bilinear}
-	a(u,v)=\frac{\ccs}{2} \int_{\RR}\int_{\RR}\frac{(u(x)-u(y))(v(x)-v(y))}{|x-y|^{1+2s}}\,dxdy.	
-\end{align}
-
-Since the bilinear form $a$ is continuous and coercive, Lax-Milgram Theorem immediately implies existence and uniqueness of solutions to the Dirichlet problem \eqref{PE}. In more detail, if $f\in H^{-s}(-1,1)$, then \eqref{PE} admits a unique weak solution $u\in H_0^s(-1,1)$ (see, e.g., \cite[Proposition 2.1]{biccari2017local}). Furthermore, in the literature it is possible to find improved regularity results for the solution to \eqref{PE}, both in H\"older and Sobolev spaces. The interested reader may refer, for instance, to \cite{acosta2017fractional,biccari2017local,leonori2015basic,ros2014dirichlet,ros2014extremal}.
 
 Let us now discuss the parabolic equation \eqref{heat_frac}. First of all, we mention that the issues of existence, uniqueness and regularity of the solutions have been studied by several authors. Among others, we mention the works \cite{biccari2017parabolic,fernandez2016boundary,leonori2015basic}. In particular, in \cite[Theorem 26]{leonori2015basic} it is showed that, assuming $z_0\in L^2(\Omega)$ and $g\in L^2(0,T;H^{-s}(\Omega))$, then equation \eqref{heat_frac} admits a unique weak solution $z\in L^2(0,T;H_0^s(\Omega))\cap C([0,T];L^2(\Omega))$ with $z_t\in L^2(0,T;H^{-s}(\Omega))$. Notice that taking as in our case $g\in L^2(\omega\times(0,T))$, the same result holds due to the continuous injection of $L^2$ into $H^{-s}$.
 
 In this paper we are mainly interested in the study of control properties for the parabolic system \eqref{heat_frac}. For the sake of completeness, we include below the definitions of null and approximate controllability.
 
 \begin{definition}
-	System \eqref{heat_frac} is said to be \textit{null-controllable} at time $T$ if, for any $z_0\in L^2(-1,1)$, there exists $g\in L^2(\omega\times(0,T))$ such that the corresponding solution $z$ satisfies 
+	System \eqref{heat_frac} is said to be \textit{null-controllable} at time $T>0$ if, for any $z_0\in L^2(-1,1)$, there exists $g\in L^2(\omega\times(0,T))$ such that the corresponding solution $z$ satisfies 
 	\begin{align*}
 		z(x,T)=0.
 	\end{align*}
 \end{definition}
 
 \begin{definition}
-	System \eqref{heat_frac} is said to be \textit{approximately controllable} at time $T$ if, for any $z_0,z_T\in L^2(-1,1)$ and any $\delta>0$, there exists $g\in L^2(\omega\times(0,T))$ such that the corresponding solution $z$ satisfies \begin{align*}
-		\norm{z(x,T)-z_T}{L^2(-1,1)}<\delta.
+	System \eqref{heat_frac} is said to be \textit{approximately controllable} at time $T>0$ if, for any $z_0,z_T\in L^2(-1,1)$ and any $\delta>0$, there exists $g\in L^2(\omega\times(0,T))$ such that the corresponding solution $z$ satisfies 
+	\begin{align*}
+		\norm{z(x,T)-z_T}{L^2(-1,1)}\leq\delta.
 	\end{align*}
 \end{definition}
 
@@ -95,7 +85,7 @@ Then, the \textit{spectral fractional Laplacian} $(-d_x^{\,2})^s_S$ is defined b
 \end{align}
 firstly for $u\in C_0^{\infty}(-1,1)$ and then for $u\in H_0^s(-1,1)$ employing a density argument.
 
-It is important to notice that the spectral fractional Laplacian and the fractional Laplacian defined as in \eqref{fl} are two different operators. For instance, definition \eqref{fl_spec} depends on the choice of the domain (in this case, $(-1,1)$), while the integral definition does not. For a complete discussion on the differences of these two operators, we refer to \cite{servadei2014spectrum}.
+It is important to notice that the spectral fractional Laplacian and the fractional Laplacian defined as in \eqref{fl} are two different operators. For instance, definition \eqref{fl_spec} depends on the choice of the domain, while the integral definition does not. For a complete discussion on the differences of these two operators, we refer to \cite{servadei2014spectrum}.
 
 The control problem for the fractional heat equation involving the operator $(-d_x^{\,2})^s_S$ has been analyzed in \cite{micu2006controllability}, where the authors proved null controllability provided that $s>1/2$. For $s\leq 1/2$, instead, null controllability does not hold, not even for $T$ large. This negative result is based on the equivalence (consequence of M\"untz Theorem, see, e.g., \cite[Page 24]{schwartz1958etude}) between the controllability property (more specifically, the possibility of proving an observability inequality), and the following condition for the eigenvalues of the considered operator 
 \begin{align}\label{eigen_cond}
@@ -103,5 +93,19 @@ The control problem for the fractional heat equation involving the operator $(-d
 \end{align} 
 which is clearly not satisfied for the spectral fractional Laplacian when $s\leq 1/2$, since in that case the eigenvalues are $\lambda_k = (k\pi)^{2s}$. Finally, in \cite{miller2006controllability}, the same result as in \cite{micu2006controllability} is obtained in a multi-dimensional setting, by means of a  \textit{spectral observability condition} for a negative self-adjoint operator, which allows to prove the null-controllability of the semi-group that it generates.
 
-As we anticipated in Section \ref{intro_sec}, the same null controllability result holds for the parabolic equation \eqref{heat_frac}. This will be obtained by means of classical tools (\cite{fattorini1971exact}) and by an explicit approximations of the eigenvalues and the eigenfunctions the fractional Laplacian with homogeneous Dirichlet boundary conditions. 
+As we anticipated in Section \ref{intro_sec}, the same null controllability result holds for the parabolic equation \eqref{heat_frac}.
+This will be obtained by means of classical tools (\cite{fattorini1971exact}) and by an explicit approximations of the eigenvalues and the eigenfunctions the fractional Laplacian with homogeneous Dirichlet boundary conditions. 
+
+We stress that \eqref{heat_frac} is a different model with respect to the ones analyzed in \cite{micu2004introduction,miller2006controllability}, since the operators \eqref{fl} and \eqref{fl_spec} are not equivalent. 
+
+We conclude this section by introducing the variational formulation associated to equation \eqref{PE}, which is at the heart of our numerical method. That is, find $u\in H^s_0(-1,1)$ such that
+\begin{align*}
+a(u,v) = \int_{-1}^1 fv\,dx,	
+\end{align*}
+for all $v\in H_0^s(-1,1)$, where the bilinear form $a(\cdot,\cdot):H^s_0(-1,1)\times H^s_0(-1,1)\to \RR$ is given by
+\begin{align}\label{bilinear}
+a(u,v)=\frac{\ccs}{2} \int_{\RR}\int_{\RR}\frac{(u(x)-u(y))(v(x)-v(y))}{|x-y|^{1+2s}}\,dxdy.	
+\end{align}
+
+Since the bilinear form $a$ is continuous and coercive, Lax-Milgram Theorem immediately implies existence and uniqueness of solutions to the Dirichlet problem \eqref{PE}. In more detail, if $f\in H^{-s}(-1,1)$, then \eqref{PE} admits a unique weak solution $u\in H_0^s(-1,1)$ (see, e.g., \cite[Proposition 2.1]{biccari2017local}). Furthermore, in the literature it is possible to find improved regularity results for the solution to \eqref{PE}, both in H\"older and Sobolev spaces. The interested reader may refer, for instance, to \cite{acosta2017fractional,biccari2017local,leonori2015basic,ros2014dirichlet,ros2014extremal}.
 

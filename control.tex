@@ -1,9 +1,9 @@
-\section{Proof of the controllability properties}
+\section{Proof of the controllability properties}\label{control_sec}
 
 This section is devoted to study the control properties for the parabolic system \eqref{heat_frac}. We begin by proving the null controllability result.
 
 \begin{proof}[Proof of Theorem \ref{null_control_thm}]
-First of all, for all $\varphi^T\in L^2(-1,1)$, let $\varphi(x,t)$ be the unique solution to the adjoint system
+First of all, for all $\varphi^T\in L^2(-1,1)$, let $\varphi(x,t)$ be the unique weak solution to the adjoint system
 \begin{align}\label{heat_frac_adj}
 	\begin{cases}
 		-\varphi_t + \fl{s}{\varphi} = 0, & (x,t)\in (-1,1)\times(0,T)
@@ -16,7 +16,7 @@ First of all, for all $\varphi^T\in L^2(-1,1)$, let $\varphi(x,t)$ be the unique
 
 Multiplying \eqref{heat_frac} by $\varphi$ and integrating over $(-1,1)\times (0,T)$, it is straightforward to check that $z(x,T)=0$ if and only if 
 \begin{align}\label{control_id}
-	\int_0^T\int_{-1}^1 \varphi(x,t)g(x,t)\mathbf{1}_{\omega}(x)\,dxdt = -\int_{-1}^1 u_0(x)\varphi(x,0)\,dx,
+	\int_0^T\int_{-1}^1 \varphi(x,t)g(x,t)\mathbf{1}_{\omega}(x)\,dxdt = -\int_{-1}^1 z_0(x)\varphi(x,0)\,dx,
 \end{align}
 
 In turn, it is classical that \eqref{control_id} is equivalent to the existence of a constant $C>0$ such that the following observability inequality holds
@@ -58,9 +58,9 @@ Therefore, we easily see that the condition \eqref{eigen_cond} is satisfied if a
 Even if for $s\leq 1/2$ null controllability for \eqref{heat_frac} fails, Theorem \ref{approx_control_thm} ensures that, for all $s\in(0,1)$, we still have approximate controllability. This is consequence of a unique continuation property for the fractional Laplacian, which has been obtained in \cite{fall2014unique}.
 
 \begin{proof}[Proof of Theorem \ref{approx_control_thm}]
-It is classical that the result is true as soon as one has the following unique continuation property for the solution to the adjoint equation \eqref{heat_frac_adj} (see, e.g., \cite[Theorem 5.2]{micu2004introduction}).
+It is classical (see, e.g., \cite[Theorem 5.2]{micu2004introduction}) that the result is true as soon as one has the following unique continuation property for the solution to the adjoint equation \eqref{heat_frac_adj}.
 	
-\MyQuote{Given $s\in(0,1)$ and $\varphi^T_0\in L^2(-1,1)$, let $\varphi$ be the unique solution to the system \eqref{heat_frac_adj}. Let $\omega\subset (-1,1)$ be an arbitrary open set. If $\varphi = 0$ on $\omega\times(0,T)$, then $\varphi = 0$ on $(-1,1)\times(0,T)$.}
+\MyQuote{Given $s\in(0,1)$ and $\varphi^T\in L^2(-1,1)$, let $\varphi$ be the unique solution to the system \eqref{heat_frac_adj}. Let $\omega\subset (-1,1)$ be an arbitrary open set. If $\varphi = 0$ on $\omega\times(0,T)$, then $\varphi = 0$ on $(-1,1)\times(0,T)$.}
 	
 Therefore, we are reduced to the proof of the property ($\mathcal P$). To this end, let us recall that $\varphi$ can be expressed in the form \eqref{adj_sol} and let us assume that 
 \begin{align}\label{uc}
@@ -81,21 +81,21 @@ Hence, letting
 \begin{align*}
 	w_N(x,t):= \sum_{k=1}^N \left(\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x)\right)e^{z(t-T)}e^{-\lambda_k(T-t)},
 \end{align*}
-we have shown that $\norm{w_T(x,t)}{L^2(-1,1)}\leq Ce^{\eta(t-T)}\norm{\varphi^T}{L^2(-1,1)}$. Moreover, we have
+we have shown that $\norm{w_N(x,t)}{L^2(-1,1)}\leq Ce^{\eta(t-T)}\norm{\varphi^T}{L^2(-1,1)}$. Moreover, we have
 \begin{align*}
 	\int_{-\infty}^T e^{\eta(t-T)}\norm{\varphi^T}{L^2(-1,1)}\,dt = \frac{1}{\eta}\norm{\varphi^T}{L^2(-1,1)}\int_0^{+\infty} e^{-\tau}\,d\tau = \frac{1}{\eta}\norm{\varphi^T}{L^2(-1,1)}.
 \end{align*}
 Therefore, we can apply the Dominated Convergence Theorem, obtaining
 \begin{align}\label{dct_identity}
-	\lim_{N\to+\infty}\int_{-\infty}^T w_N(x,t)\,dt &= \int_{-\infty}^T\lim_{N\to+\infty} w_N(x,t)\,dt = \int_{-\infty}^T e^{z(t-T)} \sum_{k=1}^{+\infty} \left(\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x)\right)e^{-\lambda_k(T-t)}\,dt \notag
+	\lim_{N\to+\infty}\int_{-\infty}^T w_N(x,t)\,dt &= \int_{-\infty}^T\lim_{N\to+\infty} w_N(x,t)\,dt = \int_{-\infty}^T e^{z(t-T)} \sum_{k\geq1} \left(\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x)\right)e^{-\lambda_k(T-t)}\,dt \notag
 	\\
-	&=\sum_{k=1}^{+\infty}\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x) \int_{-\infty}^T e^{z(t-T)}e^{-\lambda_k(T-t)}\,dt =\sum_{k=1}^{+\infty}\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x) \int_0^{+\infty} e^{-(z+\lambda_k)\tau}\,d\tau \notag
+	&=\sum_{k\geq1}^{+\infty}\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x) \int_{-\infty}^T e^{z(t-T)}e^{-\lambda_k(T-t)}\,dt =\sum_{k\geq1}^{+\infty}\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x) \int_0^{+\infty} e^{-(z+\lambda_k)\tau}\,d\tau \notag
 	\\
-	&=\sum_{k=1}^{+\infty}\sum_{j=1}^{m_k} \frac{\varphi_{k_j}}{z+\lambda_k}\psi_{k_j}(x), \;\;\; x\in (-1,1)\;\Re(z)>0.
+	&=\sum_{k\geq1}^{+\infty}\sum_{j=1}^{m_k} \frac{\varphi_{k_j}}{z+\lambda_k}\psi_{k_j}(x), \;\;\; x\in (-1,1),\;\Re(z)>0.
 \end{align} 
 It follows from \eqref{uc} and \eqref{dct_identity} that 
 \begin{align*}
-	\sum_{k=1}^{+\infty}\sum_{j=1}^{m_k} \frac{\varphi_{k_j}}{z+\lambda_k}\psi_{k_j}(x)=0, \;\;\; x\in\omega,\;\Re(z)>0.
+	\sum_{k\geq1}^{+\infty}\sum_{j=1}^{m_k} \frac{\varphi_{k_j}}{z+\lambda_k}\psi_{k_j}(x)=0, \;\;\; x\in\omega,\;\Re(z)>0.
 \end{align*}
 
 This holds for every $z\in\CC\setminus\{-\lambda_k\}_{k\in\NN}$, using the analytic continuation in $z$. Hence, taking a suitable small circle around $-\lambda_{\ell}$ not including $\{-\lambda_k\}_{k\neq\ell}$ and integrating on that circle we get that
@@ -108,7 +108,7 @@ This can applied to $w_{\ell}$, in order to conclude $w_{\ell} = 0$ in $(-1,1)$ 
 \end{proof}
 
 \begin{remark}
-According to \cite{fall2014unique}, the elliptic unique continuation property for the fractional Laplacian holds in any space dimension. In view of that, Theorem \ref{approx_control_thm} may be extended also to the case $N>1$. On the other hand, the same does not applies to Theorem \eqref{null_control_thm}. Indeed, the proof of this result uses arguments that are designed specifically for one-dimensional problems (\cite{fattorini1971exact}). If one would analyze the null-controllability in a general multi-dimensional setting, other tools (such as Carleman estimates) are needed. As far as we know, these techniques have not been fully developed yet for problems involving the fractional Laplacian on a domain. 
+According to \cite{fall2014unique}, the elliptic unique continuation property for the fractional Laplacian holds in any space dimension. In view of that, Theorem \ref{approx_control_thm} may be extended also to the case $N>1$. On the other hand, the same does not applies to Theorem \ref{null_control_thm}. Indeed, the proof of this result use arguments that are designed specifically for one-dimensional problems (\cite{fattorini1971exact}). If one would like to analyze the null-controllability in a general multi-dimensional setting, other tools (for instance Carleman estimates) are needed. As far as we know, these techniques have not been fully developed yet for problems involving the fractional Laplacian on a domain. 
 \end{remark}
 
 \begin{remark}

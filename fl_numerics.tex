@@ -27,7 +27,7 @@
 \usepackage{graphicx}
 \usepackage{txfonts}
 \usepackage{subfig}
-\usepackage{refcheck}
+%\usepackage{refcheck}
 %\usepackage[pagewise]{lineno}\linenumbers
 \usepackage[pagewise]{lineno}
 \DeclareMathAlphabet{\mathbbm}{U}{bbm}{m}{n}% from bbm.sty
@@ -78,6 +78,8 @@
 \newcommand\inter[1]{\llbracket #1\rrbracket}
 \newcommand\mesh{\mathfrak{M}}
 \newcommand{\rouge}[1]{\color{red}#1\color{black}}
+\newcommand{\lop}[2]{\mathcal{L}_T(#1,#2)}
+\newcommand{\loh}[2]{\mathcal{L}^h_T\left(#1,#2\right)}
 
 %
 \usepackage{tikz}
@@ -166,7 +168,7 @@ We analyze the controllability problem for a one-dimensional heat equation invol
 \input{appendix.tex}
 
 \section*{Acknowledgements}
-The authors wish to acknowledge F. Boyer (Institut de Math\'ematiques de Toulouse) for his contribution in the development of the numerical implementation of the control problem. Moreover, a special thanks goes to J. Loh\'eac (Laboratoire de Sciences Num\'eriques de Nantes), for helping with some computations in Section \ref{fe_sec}.  
+The authors wish to acknowledge F. Boyer (Institut de Math\'ematiques de Toulouse) for fruitful discussion on the numerical implementation of the control problem. Moreover, a special thanks goes to J. Loh\'eac (Laboratoire de Sciences Num\'eriques de Nantes), for helping with some computations in Section \ref{fe_sec}.  
 
 \bibliography{biblio}
 

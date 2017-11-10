@@ -1,4 +1,4 @@
-\section{Development of the numerical scheme}\label{fe_sec}
+\section{The penalized HUM and its implementation}\label{fe_sec}
 
 We devote this Section to the description of the numerical scheme that we are going to employ for solving the control problem. Let us start with a brief description of the so called penalized Hilbert Uniqueness Method (HUM in what follows) that we shall employ for computing the controls for equation \eqref{heat_frac}. Here, we will mostly refer to the work of Boyer \cite{boyer2013penalised}.
 
@@ -13,13 +13,11 @@ Let $(U,[\cdot,\cdot])$ be another Hilbert space whose norm is denoted by $\inte
 	\end{cases}
 \end{align}
 
-The well posedness of \eqref{abstract_pb} is guaranteed by \cite[Theorem 2.37]{coron2007control}. From now on, we will refer to the solution as $t\mapsto y_{v,y_0}(t)$.
-
-Notice that we have $y_{0,y_0}(t)= e^{-tA}y_0$. Moreover, for simplicity, the solution at time $T$, which is of particular interest in what follows, will be denoted by 
-\begin{align*}
-	y_{v,y_0}(T)=\mathcal{L}_T(v|y_0).
-\end{align*} 
-The linear operator $\mathcal{L}_T(\cdot|\cdot)$ is then continuous from $L^2(0,T;U)\times E$ into $E$.
+The well posedness of \eqref{abstract_pb} is guaranteed by \cite[Theorem 2.37]{coron2007control}. From now on, we will denote the solution at time $T$ corresponding to the initial datum $y_0$ and the control $v$ by 
+\begin{align}\label{lop}
+	y_{v,y_0}(T)=\lop{v}{y_0}.
+\end{align} 
+The linear operator $\lop{\cdot}{\cdot}$ is then continuous from $L^2(0,T;U)\times E$ into $E$.
 
 In the framework of both controllability notions that we introduced in Section \ref{theor_sec}, if one control exists it is certainly not unique. In the penalized version of the HUM, we look for a control that is solution to a suitable optimization problem. In particular, for any $\varepsilon>0$, we shall find
 
@@ -28,22 +26,22 @@ In the framework of both controllability notions that we introduced in Section \
 \end{align}
 where
 \begin{align*}
-	F_\varepsilon(v):=\frac{1}{2}\int_0^T\inter{v(t)}^2\,dt+\frac{1}{2\varepsilon}\norm{\mathcal L(v|y_0)}{}^2, \quad \forall v\in L^2(0,T;U).
+	F_\varepsilon(v):=\frac{1}{2}\int_0^T\inter{v(t)}^2\,dt+\frac{1}{2\varepsilon}\norm{\lop{v}{y_0}}{}^2, \quad \forall v\in L^2(0,T;U).
 \end{align*}
 
-Observe that, for any $\varepsilon > 0$, the functional $F_\varepsilon$ has a unique minimizer on $L^2(0,T;U)$  that we denote by $v_\varepsilon$. This is due to the fact that $F_\varepsilon$ is strictly convex, continuous and coercive. 
+Observe that, for any $\varepsilon > 0$, the functional $F_\varepsilon$ has a unique minimizer in $L^2(0,T;U)$  that we denote by $v_\varepsilon$. This is due to the fact that $F_\varepsilon$ is strictly convex, continuous and coercive. 
 
-However, the space $L^2(0,T;U)$ in which one has to minimize $F_\varepsilon$ is a quite big one and it depends on the time variable. This makes the minimization problem computationally expensive. This issue can be circumvented by considering the following optimization problem, defined on the smaller space $E$. Namely, we consider the minimization problem  
+However, the space $L^2(0,T;U)$ in which one has to minimize $F_\varepsilon$ is a quite big one and it depends on the time variable. This makes the optimization problem computationally expensive. This issue can be circumvented by considering the following problem, defined on the smaller space $E$. Namely, we consider the minimization problem  
 %
 \begin{align}\label{min_je}
 	q^T_\varepsilon=\min_{q\in E} J_\varepsilon (q^T)
 \end{align}
 where
 \begin{align}\label{penalized_fun}
-	J_\varepsilon(q^T):=\frac{1}{2}\int_0^T\inter{B^*e^{-(T-t)A^*}q^T}^2\,dt+\frac{\varepsilon}{2}\norm{q^T}{}^2 + \left\langle y_0,e^{-TA^*}q^T\right\rangle, \quad \forall q^T\in E.
+	J_\varepsilon(q^T):=\frac{1}{2}\int_0^T\inter{B^*e^{-(T-t)A^*}q^T}^2\,dt+\frac{\varepsilon}{2}\norm{q^T}{}^2 + \langle \lop{y_0}{0},q^T\rangle, \quad \forall q^T\in E.
 \end{align}
 
-In fact, it is classical to prove that  \eqref{min_ve} and \eqref{min_je} are equivalent since, for any $\varepsilon > 0$, the minimisers $v_\varepsilon$ and $q_\varepsilon^T$ of the functionals $F_\varepsilon$ and $J_\varepsilon$, respectively, are related through the formula
+In fact, it is classical to prove that  \eqref{min_ve} and \eqref{min_je} are equivalent since, for any $\varepsilon > 0$, the minimizers $v_\varepsilon$ and $q_\varepsilon^T$ of the functionals $F_\varepsilon$ and $J_\varepsilon$, respectively, are related through the formula
 \begin{align*}
 	v_\varepsilon = B^*e^{-(T-t)A^*}q_\varepsilon^T, \quad \textrm{for a.e. } t\in(0,T).
 \end{align*} 
@@ -53,7 +51,7 @@ Notice also that we can express the approximate and null controllability propert
 \begin{theorem}[Theorem 1.7 of \cite{boyer2013penalised}]\label{theorem_hum}
 Problem \eqref{abstract_pb} is approximately controllable from the initial datum $y_0$ if and only if we have
 \begin{align*}
-	\mathcal{L}_T(v_\varepsilon|y_0) = y_{v_\varepsilon,y_0}(T)\rightarrow 0,\;\;\;\textrm{ as }\;\varepsilon\to 0.
+	\lop{v_\varepsilon}{y_0} = y_{v_\varepsilon,y_0}(T)\rightarrow 0,\;\;\;\textrm{ as }\;\varepsilon\to 0.
 \end{align*}
 Problem \eqref{abstract_pb} is null-controllable from the initial datum $y_0$ if and only if we have
 \begin{align*}
@@ -63,16 +61,16 @@ In this case, we have
 \begin{align*}
 	\inter{v_\varepsilon}_{L^2(0,T;U)}\leq M_{y_0},\nonumber
 	\\
-	\norm{\mathcal L_T(v_\varepsilon|y_0)}{}\leq M_{y_0}\sqrt{\varepsilon}.
+	\norm{\lop{v_\varepsilon}{y_0}}{}\leq M_{y_0}\sqrt{\varepsilon}.
 \end{align*} 
 \end{theorem} 
 
-Observe that the fractional Laplacian $\fl{s}{}$ satisfies the properties required for the operator $A$ (see, e.g., \cite[Theorem 2.14]{gal2017nonlocal}). Therefore, the penalized HUM that we just described can be applied to the control problem \eqref{heat_frac}. To this purpose, let us now present its numerical implementation. 
+Observe that the fractional Laplacian $\fl{s}{}$ satisfies the properties required for the operator $A$ (see, e.g., \cite[Theorem 2.14]{gal2017nonlocal}). Therefore, the penalized HUM approach that we just described can be applied to the control problem \eqref{heat_frac}. Following the discussion in \cite{boyer2013penalised}, we expect that, under discretization, the solution $z$ to \eqref{heat_frac} retains the properties of controllability stated in Theorem \ref{theorem_hum}. This will be in accordance with the theoretical results obtained in Theorems \ref{null_control_thm} and \ref{approx_control_thm}. 
 
-Following the discussion in \cite{boyer2011uniform}, we can study the fully-discrete version of \eqref{heat_frac}. For any given mesh $\mathfrak M$ and any integer $M>0$, we set $\delta t=T/M$ and we consider an implicit Euler method, with respect to the time variable. More precisely, we consider
+To this end, let us study the fully-discrete version of \eqref{heat_frac}. For any given mesh $\mathfrak M$ and any integer $M>0$, we set $\delta t=T/M$ and we consider an implicit Euler method, with respect to the time variable. More precisely, we consider
 \begin{align}\label{frac_heat_num}
 	\begin{cases}
-		\displaystyle\mathcal M_h \frac{z^{n+1}-z^n}{\delta t}+\mathcal A_h z^{n+1}=\mathbf{1}_\omega v_h^{n+1}, \quad \forall n\in \left\{1,\ldots,M-1\right\}
+		\displaystyle\mathcal M_h \frac{z^{n+1}-z^n}{\delta t}+\mathcal A_h z^{n+1}=v_h^{n+1}\mathbf{1}_\omega, \quad \forall n\in \left\{1,\ldots,M-1\right\}
 		\\
 		z^0=z_0, 
 	\end{cases}
@@ -91,15 +89,19 @@ and where $| \cdot |_{L^2(\RR^\mesh)}$ stands for the norm associated to the $L^
 With the above notation and according to the penalized HUM strategy, we introduce, for some penalization parameter $\varepsilon>0$, the following primal fully-discrete functional 
 
 \begin{align*}
-	F_{\varepsilon,h,\delta t}(v_{\delta t})=\sum_{n=1}^{M}\delta t |v^n|^2_{L^2(\RR^\mesh)}+\frac{1}{2\varepsilon}|z^M|^2_{L^2(\RR^\mesh)}, \quad \forall \, v_{\delta t}\in L_{\delta t}^2(0,T;\mathbb R^\mesh),
+	F_{\varepsilon,h,\delta t}(v_{\delta t})=\frac 12\norm{v_{\delta t}}{L_{\delta t}^2(0,T;\mathbb R^\mesh)}^2+\frac{1}{2\varepsilon}|\loh{v_{\delta t}}{y_0}|_{L^2(\RR^\mesh)}^2, \quad \forall \, v_{\delta t}\in L_{\delta t}^2(0,T;\mathbb R^\mesh),
 \end{align*}
-that we wish to minimize onto the whole fully-discrete control space $L_{\delta t}^2(0,T;\mathbb R^\mesh)$ and where $z^M$ is the final value of the controlled problem \eqref{frac_heat_num}. 
+that we wish to minimize onto the whole fully-discrete control space $L_{\delta t}^2(0,T;\mathbb R^\mesh)$ and where $z^M$ is the final value of the controlled problem \eqref{frac_heat_num}. Here $\loh{\cdot}{\cdot}$ stands for the discrete version of the operator \eqref{lop}.
 
 We can apply Fenchel-Rockafellar theory results to obtain the corresponding dual functional, which reads as follows
 \begin{align}\label{dual_fully}
-	J_{\varepsilon,h,\delta t}(\varphi^T)=\frac{1}{2}\sum_{n=1}^{M}\delta t|\mathbf 1_\omega\varphi|^2_{L^2(\RR^\mesh)}+\frac{\varepsilon}{2}|\varphi^T|^2_{L^2(\RR^\mesh)}+(\varphi^1,y_0)_{L^2(\RR^\mesh)}, \quad \forall \varphi^T\in L_{h,\delta t}^2(-1,1)
+	J_{\varepsilon,h,\delta t}(\varphi^T)=\frac 12\norm{\loh{\cdot}{0}^\star\varphi^T}{L_{\delta t}^2(0,T;\mathbb R^\mesh)}^2+\frac{\varepsilon}{2}|\varphi^T|^2_{L^2(\RR^\mesh)}+\left(\varphi^T,\loh{0}{y_0}\right)_{L^2(\RR^\mesh)}, \quad \forall \varphi^T\in L_{h,\delta t}^2(-1,1)
 \end{align}
-where $\varphi=(\varphi^n)_{1\leq n\leq M+1}$ is solution to the adjoint system
+where $\loh{\cdot}{\cdot}^\star$ is the adjoint of $\loh{\cdot}{\cdot}$ and
+\begin{align*}
+	 \loh{\cdot}{0}^\star\varphi^T=(\mathbf{1}_\omega\varphi^n)_{1\leq n\leq M+1}
+\end{align*}
+with $\varphi=(\varphi^n)_{1\leq n\leq M+1}$ solution to the adjoint system
 \begin{align}\label{frac_adj_num}
 	\begin{cases}
 		\displaystyle\mathcal M_h \frac{\varphi^n-\varphi^{n+1}}{\delta t}+\mathcal A_h \varphi^n=0, & \forall n\in\{1,\ldots,M\}
@@ -163,7 +165,7 @@ while the vector $F\in\RR^N$ is given by $F=(F_1,\ldots,F_N)$ with
 	F_i = \langle f,\phi_i\rangle = \int_{-1}^1 f\phi_i\,dx,\;\;\; i=1,\ldots,N.
 \end{align*}
 
-Moreover, the basis $\big\{\phi_i\big\}_{i=1}^N$ that we will employ is the classical one in which each $\phi_i$ is the tent function with $supp(\phi_i)=(x_{i-1},x_{i+1})$ and verifying $\phi_i(x_j)=\delta_{i,j}$. In particular, for $x\in\{x_{i-1},x_i,x_{i+1}\}$ the $i^{th}$ function of the basis is explicitly defined as (see Fig. \ref{basis}) 
+Moreover, the basis $\big\{\phi_i\big\}_{i=1}^N$ that we will employ is the classical one in which each $\phi_i$ is the tent function with $supp(\phi_i)=(x_{i-1},x_{i+1})$ and verifying $\phi_i(x_j)=\delta_{i,j}$. In particular, for $x\in\{x_{i-1},x_i,x_{i+1}\}$ the $i^{th}$ function of the basis is explicitly defined as (see Figure \ref{basis}) 
 \begin{align}\label{basis_fun}
 	\phi_i(x)= 1-\frac{|x-x_i|}{h}.
 \end{align} 
@@ -178,7 +180,7 @@ Moreover, the basis $\big\{\phi_i\big\}_{i=1}^N$ that we will employ is the clas
 \figpt 5:(50,0) \figpt 6:(0,0)
 %
 % Points for writing
-\figpt 7:(-50,-10) \figpt 8:(0,110) 
+\figpt 7:(-50,-10) \figpt 8:(0,112) 
 \figpt 9:(50,-10) \figpt 10:(0,-10)
 
 \figpt 13:(-100,130) \figpt 14:(180,-10)
@@ -197,6 +199,7 @@ Moreover, the basis $\big\{\phi_i\big\}_{i=1}^N$ that we will employ is the clas
 
 % 3. Writing text on the figure
 \figvisu{\figBoxA}{}{
+\figwritec[3,4,5]{$\bullet$}	
 \figwritec [7]{$(x_{i-1},0)$}
 \figwritec [8]{$(x_i,1)$}
 \figwritec [9]{$(x_{i+1},0)$}
@@ -219,7 +222,7 @@ The following fact are worth noticing.
 	
 	\item Due to the non-local nature of the problem, the matrix $\mathcal A_h$ is full. However, while computing its components, we will encounter many simplifications, due to the fact that $supp(\phi_i)\cap supp(\phi_j) =\emptyset$ for $j\geq i+2$.
 	
-	\item While computing the values $a_{i,j}$, we will only work on the mesh $\mathfrak{M}$, not considering the points of the set $\partial\mathfrak{M}$. In this way, we will ensure that the basis functions $\phi_i$ satisfy the zero Dirichlet boundary conditions. In other words, in our FE approximation we are considering only the functions from $\phi_1$ to $\phi_N$. Instead, if we considered the points $x_0$ and $x_{N+1}$, then we would need to introduce in our discretization also the basis functions $\phi_0$ and $\phi_{N+1}$, which take value one at the boundary, and this would not be consistent with the continuous problem. Fig. \ref{basis_int} provides a graphical explanation of this last discussion.      	
+	\item While computing the values $a_{i,j}$, we will only work on the mesh $\mathfrak{M}$, not considering the points of the set $\partial\mathfrak{M}$. In this way, we will ensure that the basis functions $\phi_i$ satisfy the zero Dirichlet boundary conditions. In other words, in our FE approximation we are considering only the functions from $\phi_1$ to $\phi_N$. Instead, if we considered the points $x_0$ and $x_{N+1}$, then we would need to introduce in our discretization also the basis functions $\phi_0$ and $\phi_{N+1}$, which take value one at the boundary, and this would not be consistent with the continuous problem. Figure \ref{basis_int} provides a graphical explanation of this last discussion.      	
 \end{enumerate}
 \end{remark}
 
@@ -312,7 +315,7 @@ The following fact are worth noticing.
 \caption{Basis functions $\phi_i(x)$ on the whole interval $(-L,L)$.}\label{basis_int}
 \end{figure}
 
-We now start building the stiffness matrix $\mathcal A_h$. This will be done it in three steps, since the values of the matrix can be computed differentiating among three well defined regions: the upper triangle, corresponding to $j\geq i+2$, the upper diagonal corresponding to $j=i+1$ and the diagonal, corresponding to $j=i$ (see Fig. \ref{matrix_fig}). In fact, as it will be clear during our computations, in each of these regions the intersections among the support of the basis functions are different, thus generating different values of the bilinear form. In what follows, we will briefly present which will be the contributions to the matrix in each of these three steps, including the complete computations as an appendix at the end of the paper. 
+We now start building the stiffness matrix $\mathcal A_h$. This will be done it in three steps, since the values of the matrix can be computed differentiating among three well defined regions: the upper triangle, corresponding to $j\geq i+2$, the upper diagonal corresponding to $j=i+1$ and the diagonal, corresponding to $j=i$ (see Figure \ref{matrix_fig}). In fact, as it will be clear during our computations, in each of these regions the intersections among the support of the basis functions are different, thus generating different values of the bilinear form. In what follows, we will briefly present which will be the contributions to the matrix in each of these three steps, including the complete computations as an appendix at the end of the paper. 
 
 \begin{figure}[!h]
 
@@ -335,7 +338,7 @@ We now start building the stiffness matrix $\mathcal A_h$. This will be done it 
 \end{figure}
 
 \subsubsection*{Step 1: $j\geq i+2$}
-As we mentioned in Remark \ref{rem_prel}, in this case we have $supp(\phi_i)\cap supp(\phi_j) =\emptyset$ (see also Fig. \ref{basis_upp_tri}). Hence, \eqref{stiffness_nc} is reduced to computing only the integral
+As we mentioned in Remark \ref{rem_prel}(3), in this case we have $supp(\phi_i)\cap supp(\phi_j) =\emptyset$ (see also Figure \ref{basis_upp_tri}). Hence, \eqref{stiffness_nc} is reduced to computing only the integral
 \begin{align}\label{elem_noint}
 	a_{i,j}=-2 \int_{x_{j-1}}^{x_{j+1}}\int_{x_{i-1}}^{x_{i+1}}\frac{\phi_i(x)\phi_j(y)}{|x-y|^{1+2s}}\,dxdy.
 \end{align}
@@ -423,65 +426,7 @@ In this way, for the elements $a_{i,j}$, $j\geq i+2$, we get the following value
 \end{align*}
 
 \subsubsection*{Step 2: $j= i+1$}
-This is the most cumbersome case, since it is the one with the most interactions between the basis functions (see Fig. \ref{basis_upp_dia}). 
-
-\begin{figure}[h]
-\figinit{0.7pt}
-% Axes
-\figpt 1:(-100,0) \figpt 2:(200,0)
-\figpt 11:(-90,-10) \figpt 12:(-90,140)
-%%%%
-\figpt 3:(-50,0) \figpt 4:(0,100) 
-\figpt 5:(50,0) \figpt 6:(0,0)
-
-\figpt 31:(0,0) \figpt 41:(50,100) 
-\figpt 51:(100,0) \figpt 61:(50,0)
-%
-% Points for writing
-\figpt 7:(-50,-10) \figpt 8:(0,110) 
-\figpt 9:(50,-10) \figpt 10:(0,-10)
-
-\figpt 71:(0,-25) \figpt 81:(50,110) 
-\figpt 91:(100,-25) \figpt 101:(50,-25)
-
-\figpt 13:(-100,130) \figpt 14:(180,-10)
-\figpt 15:(-50,50) \figpt 16:(100,50)
-
-% 2. Creation of the graphical file
-\figdrawbegin{}
-\figdrawarrow[1,2]
-\figdrawline[3,4]
-\figdrawline[4,5]
-\figset (color=\Redrgb)
-\figdrawline[31,41]
-\figdrawline[41,51]
-\figset (color=default)
-\figset(dash=4)
-\figdrawline[4,6]
-\figdrawline[41,61]
-\figdrawarrow[11,12]
-
-\figdrawend
-
-% 3. Writing text on the figure
-\figvisu{\figBoxA}{}{
-\figwritec [7]{$(x_{i-1},0)$}
-\figwritec [8]{$(x_i,1)$}
-\figwritec [9]{$(x_{i+1},0)$}
-\figwritec [10]{$(x_i,0)$}
-\figwritec [71]{$(x_{j-1},0)$}
-\figwritec [81]{$(x_j,1)$}
-\figwritec [91]{$(x_{j+1},0)$}
-\figwritec [101]{$(x_j,0)$}
-\figwritec [13]{$y$}
-\figwritec [14]{$x$}
-\figwritec [15]{$\phi_i(x)$}
-\figwritec [16]{$\color{red}\phi_j(x)$}
-}
-\centerline{\box\figBoxA}
-\caption{Basis functions $\phi_i(x)$ and $\phi_{i+1}(x)$. In this case, the intersection of the supports is the interval $[x_i,x_{i+1}]$.}\label{basis_upp_dia}
-\end{figure}
-
+This is the most cumbersome case, since it is the one with the most interactions between the basis functions (see Figure \ref{basis_upp_dia}). 
 According to \eqref{stiffness_nc}, and using the symmetry of the integral with respect to the bisector $y=x$, we have 
 	\begin{align*}
 	a_{i,i+1}= & \int_{\RR}\int_{\RR}\frac{(\phi_i(x)-\phi_i(y))(\phi_{i+1}(x)-\phi_{i+1}(y))}{|x-y|^{1+2s}}\,dxdy
@@ -492,7 +437,64 @@ According to \eqref{stiffness_nc}, and using the symmetry of the integral with r
 	\\
 	:= & Q_1 + Q_2 + Q_3 + Q_4 + Q_5 + Q_6.
 \end{align*}
-
+%
+\begin{figure}[th]
+	\figinit{0.7pt}
+	% Axes
+	\figpt 1:(-100,0) \figpt 2:(200,0)
+	\figpt 11:(-90,-10) \figpt 12:(-90,140)
+	%%%%
+	\figpt 3:(-50,0) \figpt 4:(0,100) 
+	\figpt 5:(50,0) \figpt 6:(0,0)
+	
+	\figpt 31:(0,0) \figpt 41:(50,100) 
+	\figpt 51:(100,0) \figpt 61:(50,0)
+	%
+	% Points for writing
+	\figpt 7:(-50,-10) \figpt 8:(0,110) 
+	\figpt 9:(50,-10) \figpt 10:(0,-10)
+	
+	\figpt 71:(0,-25) \figpt 81:(50,110) 
+	\figpt 91:(100,-25) \figpt 101:(50,-25)
+	
+	\figpt 13:(-100,130) \figpt 14:(180,-10)
+	\figpt 15:(-50,50) \figpt 16:(100,50)
+	
+	% 2. Creation of the graphical file
+	\figdrawbegin{}
+	\figdrawarrow[1,2]
+	\figdrawline[3,4]
+	\figdrawline[4,5]
+	\figset (color=\Redrgb)
+	\figdrawline[31,41]
+	\figdrawline[41,51]
+	\figset (color=default)
+	\figset(dash=4)
+	\figdrawline[4,6]
+	\figdrawline[41,61]
+	\figdrawarrow[11,12]
+	
+	\figdrawend
+	
+	% 3. Writing text on the figure
+	\figvisu{\figBoxA}{}{
+		\figwritec [7]{$(x_{i-1},0)$}
+		\figwritec [8]{$(x_i,1)$}
+		\figwritec [9]{$(x_{i+1},0)$}
+		\figwritec [10]{$(x_i,0)$}
+		\figwritec [71]{$(x_{j-1},0)$}
+		\figwritec [81]{$(x_j,1)$}
+		\figwritec [91]{$(x_{j+1},0)$}
+		\figwritec [101]{$(x_j,0)$}
+		\figwritec [13]{$y$}
+		\figwritec [14]{$x$}
+		\figwritec [15]{$\phi_i(x)$}
+		\figwritec [16]{$\color{red}\phi_j(x)$}
+	}
+	\centerline{\box\figBoxA}
+	\caption{Basis functions $\phi_i(x)$ and $\phi_{i+1}(x)$. In this case, the intersection of the supports is the interval $[x_i,x_{i+1}]$.}\label{basis_upp_dia}
+\end{figure}
+%
 These contributions will be calculated separately, employing changes of variables analogous to \eqref{cv}. After several computations, we obtain
 \begin{align*}
 	a_{i,i+1} = \begin{cases}
@@ -501,9 +503,9 @@ These contributions will be calculated separately, employing changes of variable
 					9\ln 3-16\ln 2, & \displaystyle s=\frac{1}{2}.
 				\end{cases}	
 \end{align*}
-
+%
 \subsubsection*{Step 3: $j= i$}
-As a last step, we fill the diagonal of the matrix $\mathcal A_h$, which collects the values corresponding to the case $\phi_i(x)=\phi_j(x)$ (see Fig. \ref{basis_dia}). We have
+As a last step, we fill the diagonal of the matrix $\mathcal A_h$, which collects the values corresponding to the case $\phi_i(x)=\phi_j(x)$ (see Figure \ref{basis_dia}). We have
 	\begin{align*}
 	a_{i,i}= & \int_{\RR}\int_{\RR}\frac{(\phi_i(x)-\phi_i(y))^2}{|x-y|^{1+2s}}\,dxdy
 	\\
@@ -576,7 +578,7 @@ As a last step, we fill the diagonal of the matrix $\mathcal A_h$, which collect
 \caption{Basis functions $\phi_i(x)$ and $\phi_j(x)$. In this case, the two functions coincide.}\label{basis_dia}
 \end{figure}
 
-Once again, the terms $R_i$, $i=1,\ldots,7$ will be computed separately, obtaining
+Once again, the terms $R_i$, $i=1,\ldots,7$ will be computed separately, and summing them we will obtain
 \begin{align*}
 	a_{i,i} = \begin{cases}
 			\displaystyle h^{1-2s}\,\frac{2^{3-2s}-4}{s(1-2s)(1-s)(3-2s)}, & \displaystyle s\neq\frac{1}{2}
@@ -622,13 +624,13 @@ For $s=1/2$, instead, we have
 \begin{remark}
 We point out the following facts:
 \begin{enumerate}
-	\item The matrix $\mathcal A_h$ has the structure of a $N$-diagonal matrix, meaning that value of its elements remain constant along its diagonals. This is in analogy with the tridiagonal matrix approximating the classical Laplace operator. Notice, however, that in our case we obtain a full matrix. This is consistent with the non-local nature of the operator that we are discretizing.
+	\item The matrix $\mathcal A_h$ has the structure of a $N$-diagonal matrix, meaning that value of its elements remain constant along its diagonals. This is in analogy with the tridiagonal matrix approximating the classical Laplace operator. Notice, however, that in our case we obtain a full matrix. This is consistent with the nonlocal nature of the operator that we are discretizing.
 	
 	\item The value of each element $a_{i,j}$ is given explicitly, and it only depends on $i$, $j$, $s$ and $h$. In other words, when approximating the left hand side of \eqref{WFD}, no numerical integration is needed. 
 	
 	\item For $s=1/2$, the elements $a_{i,j}$ do not depend on the value of $h$ which, in turn, is a function of $N$. This implies that, in this particular case, no matter how many points we consider in our mesh, the matrix $\mathcal A_h$ will always have the same entries. 
 	
-	\item A quick computation shows that, taking the limit $s\to 1^-$ in $\mathcal A_h$ we recover the tridiagonal matrix of the classical FE approximation of the local Poisson equation. This is in accordance with the same behavior of the continuous operator, as shown, for instance, in \cite[Proposition 4.4]{dihitchhiker}.
+	\item A quick computation shows that taking the limit $s\to 1^-$ in $\mathcal A_h$ we recover the tridiagonal matrix of the classical FE approximation of the local Poisson equation. This is in accordance with the same behavior of the continuous operator, as shown, for instance, in \cite[Proposition 4.4]{dihitchhiker}.
 \end{enumerate}
 \end{remark}
 

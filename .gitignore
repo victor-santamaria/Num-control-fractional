@@ -25,3 +25,6 @@
 *~
 *.DS_Store
 *.anx
+r.tex
+figures/
+*.auxlock

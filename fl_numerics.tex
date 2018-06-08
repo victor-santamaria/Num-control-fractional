@@ -86,7 +86,9 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}
-\usetikzlibrary{matrix,external,fit}
+\usetikzlibrary{matrix,pgfplots.external,fit}
+\tikzexternalize[prefix=figures/]
+%\tikzset{external/force remake}
 %
  \pgfplotsset{surface/.style={ %
                xmax=0.34,%
@@ -128,7 +130,7 @@
 %
 \newcounter{quotecount}
 \newcommand{\MyQuote}[1]{\vspace{0.5cm}%\refstepcounter{quotecount}{1}%
-     \parbox{12cm}{\em #1}\hspace*{1cm}($\mathcal{P}$)\\[0.5cm]}
+     \parbox{13cm}{\em #1}\hspace*{1cm}($\mathcal{P}$)\\[0.5cm]}
  
  \newcommand{\NewQuote}[1]{\vspace{0.3cm}%\refstepcounter{quotecount}{1}%
    	\parbox{14cm}{\em #1}\\[0.3cm]}
@@ -138,7 +140,7 @@
 %\title[Controllability fractional heat equation]{Controllability of a one-dimensional fractional heat equation: theoretical and numerical aspects}
 \title{{\bf Controllability of a one-dimensional fractional heat equation: theoretical and numerical aspects}}
 %
-\author{Umberto Biccari \thanks{DeustoTech, University of Deusto, 48007 Bilbao, Basque Country, Spain.}\,\,\thanks{Facultad Ingenier\'{\i}a, Universidad de Deusto, Avda Universidades 24, 48007 Bilbao, Basque Country, Spain. Emails: \texttt{umberto.biccari@deusto.es, u.biccari@gmail.com, victor.santamaria@deusto.es}}
+\author{Umberto Biccari \thanks{DeustoTech, University of Deusto, 48007 Bilbao, Basque Country, Spain.}\,\,\thanks{Facultad de Ingenier\'{\i}a, Universidad de Deusto, Avenida de las Universidades 24, 48007 Bilbao, Basque Country, Spain. Emails: \texttt{umberto.biccari@deusto.es, u.biccari@gmail.com, victor.santamaria@deusto.es}}
 \and 
 V\'ictor Hern\'andez-Santamar\'ia$\phantom{i}^{\ast\,\dag}$% \thanks{DeustoTech, University of Deusto, 48007 Bilbao, Basque Country, Spain.}\,\,\thanks{Facultad Ingenier\'{\i}a, Universidad de Deusto, Avda Universidades 24, 48007 Bilbao, Basque Country, Spain. Email: \texttt{victor.santamaria@deusto.es}}
 }
@@ -164,10 +166,7 @@ We analyze the controllability problem for a one-dimensional heat equation invol
 \input{appendix.tex}
 
 \section*{Funding}
-The work of Umberto Biccari was partially supported by the European Research Council [694126 DYCON (Dynamic control and numerics of partial differential equations)], by the Ministerio de Econom\'ia, Industria y Competividad (MINECO, Spain) [MTM2014-52347] and by the Air Force Office of Scientific Research [FA9550-15-1-0027]. 
-
-The work of V\'ictor Hern\'andez-Santamar\'ia was partially supported by the European Research Council [694126 DYCON (Dynamic control and numerics of partial differential equations)].
- 
+This project has received funding from the European Research Council (ERC) under the European Union's Horizon 2020 research and innovation programme (grant agreement No. 694126-DyCon) and from the MTM2017-92996 grant of MINECO (Spain). The work of the first author was partially supported by the Grants MTM2014-52347 of MINECO (Spain) and FA9550-18-1-0242 of AFOSR (U.S.). 
 
 \section*{Acknowledgements}
 The authors wish to acknowledge F. Boyer (Institut de Math\'ematiques de Toulouse) for fruitful discussion on the numerical implementation of the control problem. Moreover, a special thanks goes to J. Loh\'eac (Laboratoire de Sciences Num\'eriques de Nantes), for helping with some computations in Section \ref{fe_sec}.  

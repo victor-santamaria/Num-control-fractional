@@ -1,7 +1,7 @@
 \section{Numerical results} \label{res_numerical}
-In this Section, we present the numerical simulations corresponding to the algorithm previously described, and we provide a complete discussion of the results obtained. 
+In this section, we present the numerical simulations corresponding to the algorithm previously described, and we provide a complete discussion of the results obtained. 
 
-First of all, we test numerically the accuracy of our method for the resolution of the elliptic equation \eqref{PE}, by applying it to the following problem 
+First of all, we test numerically the accuracy of our method for the resolution of the elliptic equation \eqref{PE} by applying it to the following problem 
 \begin{align}\label{PE_real}
 	\left\{\begin{array}{ll}
 		\fl{s}{u} = 1, & x\in(-1,1)
@@ -10,7 +10,7 @@ First of all, we test numerically the accuracy of our method for the resolution 
 	\end{array}\right.
 \end{align}
 
-In this particular case, the unique solution to \eqref{PE_real} can be computed exactly and it is given in \cite{getoor1961first}. It reads as follows, 
+In this particular case, the unique solution to \eqref{PE_real} can be computed exactly and it is given in \cite{getoor1961first}. It reads as follows
 \begin{align}\label{real_sol}
 	u(x)=\frac{2^{-2s}\sqrt{\pi}}{\Gamma\left(\frac{1+2s}{2}\right)\Gamma(1+s)}\Big(1-x^{\,2}\Big)^s\cdot\mathbf{1}_{(-1,1)}.
 \end{align}
@@ -134,6 +134,16 @@ where $C$ is a positive constant not depending on $h$.
 
 Moreover, Figure \ref{error} shows that the convergence rate is maintained also for small values of $s$. This confirms that the behavior shown in Figure \ref{s01a} is not in contrast with the known theoretical results. Indeed, since it is well-known that the notion of trace is not defined for the spaces $H^s(-1,1)$ with $s\leq 1/2$ (see \cite{jllions1972non,tartar2007introduction}), it is somehow natural that we cannot expect a point-wise convergence in this case.  
 
+\begin{remark}
+We already mentioned in Remark \ref{FE_rem} that the stiffness matrix $\mathcal A_h$ obtained by our FE discretization of the fractional Laplacian is full. This, however, is not surprising, since the operator $\fl{s}{}$ is nonlocal and its approximation at one mesh point is affected by the information over the whole real axis. Recall that the entries of $\left(\mathcal A_h\right)_{i,j}$ are computed through the scalar product 
+\begin{align*}
+	(\phi_i,\phi_j)_{H^s(\RR)} = \frac{\ccs}{2} \int_{\RR}\int_{\RR}\frac{(\phi_i(x)-\phi_i(y))(\phi_j(x)-\phi_j(y))}{|x-y|^{1+2s}}\,dxdy,	
+\end{align*}
+which induces the $H^s(\RR)$-norm and, therefore, is the natural one when working in this functional setting. However, one may wonder whether it is possible to consider a different scalar product and, consequently, different basis functions, in order to recover some sparsity. As far as we know, in the literature concerning the discretization of the integral fractional Laplacian \eqref{fl} this issue has never been addressed, and we believe that this is not a reasonable approach for this definition of the operator. On the other hand, we mention that for spectral characterizations of the fractional Laplacian algorithms leading to a sparse stiffness matrix have been successfully implemented, for instance, in \cite{meidner2017hp}.
+
+Even though the stiffness matrix obtained with our methodology is full, which translates in a order of $\mathcal O(N^3)$ operations for solving numerically equation \eqref{PE}, there are efficient ways to reduce this computational cost. In particular, in some recent works (see, e.g., \cite{duo2018novel}) it has been proposed the usage of fast Fourirer transform (FFT) methods (\cite{chandrasekaran2007superfast,stewart2003superfast}), which exploit the symmetric Toeplitz structure of $\mathcal A_h$. This approach improves the cost up to an order of $\mathcal O(N\log N)$.
+\end{remark}
+
 \subsection{Control experiments}\label{control_exp}
 
 To address the actual computation of fully-discrete controls for a given problem, we use the methodology described, for instance, in \cite{glowinski2008exact}. We apply an optimization algorithm to the dual functional \eqref{dual_fully}. Since these functionals are quadratic and coercive, the conjugate gradient is a natural and quite simple choice.
@@ -145,7 +155,7 @@ First of all, starting from the expression \eqref{dual_fully}, the gradient of t
 
 Hence, the computation of this gradient at each iteration amounts to solve first the homogeneous equation \eqref{frac_adj_num}. Then, set $v^n=\varphi^n\mathbf{1}_\omega$ and finally solve \eqref{frac_heat_num} with zero initial datum. In this way, the procedure to compute the gradient of \eqref{dual_fully} basically requires to solve two parabolic equations: a homogeneous backward one associated with the final data $\varphi^T$, and a non-homogeneous forward problem with zero initial data. 
 
-We present now some results obtained with the described methodology. In accordance with the discussion in Section \ref{fe_sec}, we use the finite-element approximation of $\fl{s}{}$ for the space discretization and the implicit Euler scheme in the time variable. We denote by $N$ the number of points in the mesh and by $M$ the number of time intervals. As discussed in \cite{boyer2011uniform}, the results in this kind of problems does not depend too much in the time step, as soon as it is chosen to ensure at least the same accuracy as the space discretization. The same remains true here, and therefore we always take $M=2000$ in order to concentrate the discussion on the dependency of the results with respect to the mesh size $h$ and the parameter $s$.
+We present now some results obtained with the described methodology. In accordance with the discussion in Section \ref{fe_sec}, we use the finite-element approximation of $\fl{s}{}$ for the space discretization and the implicit Euler scheme in the time variable. We denote by $N$ the number of points in the mesh and by $M$ the number of time intervals. As discussed in \cite{boyer2011uniform}, the results in this kind of problems does not depend too much in the time step, as soon as it is chosen to ensure at least the same accuracy as the space discretization. The same remains true here and therefore we always take $M=2000$ in order to concentrate the discussion on the dependency of the results with respect to the mesh size $h$ and the parameter $s$.
 
 As we mentioned, we choose the penalization term $\varepsilon$ as a function of $h$. A reasonable practical rule (\cite{boyer2013penalised}) is to systematically choose $\varepsilon=\phi(h)\sim h^{2p}$ where $p$ is the order of accuracy in space of the numerical method employed for the discretization of the spatial operator involved (in this case the fractional Laplacian \eqref{fl}).
 
@@ -207,7 +217,6 @@ In Figure \ref{figure_case1}, we present the computed values of various quantiti
 	|y^M|_{L^2(\RR^\mesh)}\,\sim\,C\sqrt{\phi(h)}=Ch^{1/2}. 
 \end{align}
 
-We know that, for $s=0.8$, system \eqref{heat_frac} is null controllable. This is now confirmed by \eqref{control_norm_behavior}, according to Theorem \ref{theorem_hum}.  In fact, the same experiment can be repeated for different values of $s>1/2$, obtaining the same conclusions. 
 \begin{figure}[h]
   \centering
 \begin{tikzpicture}
@@ -231,7 +240,9 @@ We know that, for $s=0.8$, system \eqref{heat_frac} is null controllable. This i
 \caption{Convergence properties of the method for the controllability of the fractional heat equation for $s=0.8$.}\label{figure_case1}
 \end{figure}
 
-According to the discussion in Section \ref{theor_sec}, one can prove that null controllability does not hold for system \eqref{heat_frac} in the case $s\leq 1/2$. However approximate controllability can be proved by means of the unique continuation property of the operator $\fl{s}{}$. We would like to illustrate this property in Figure \ref{figure_case3}.
+We know that, for $s=0.8$, system \eqref{heat_frac} is null controllable. This is now confirmed by \eqref{control_norm_behavior}, according to Theorem \ref{theorem_hum}.  In fact, the same experiment can be repeated for different values of $s>1/2$, obtaining the same conclusions. 
+
+According to the discussion in Section \ref{theor_sec}, one can prove that null controllability does not hold for system \eqref{heat_frac} in the case $s\leq 1/2$. However, approximate controllability can be proved by means of the unique continuation property of the operator $\fl{s}{}$. We would like to illustrate this property in Figure \ref{figure_case3}.
 
 We observe that the results are different from what we obtained in Figure  \ref{figure_case1}. In fact, the cost of the control and the optimal energy increase in both cases, while the target $y^M$ tends to zero with a slower rate than $h^{1/2}$. This seems to confirm that a uniform observability estimate for \eqref{heat_frac} does not hold and that we can only expect to have approximate controllability (see Theorem \ref{theorem_hum}).
 \begin{figure}

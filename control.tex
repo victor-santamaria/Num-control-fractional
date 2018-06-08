@@ -3,7 +3,7 @@
 This section is devoted to study the control properties for the parabolic system \eqref{heat_frac}. We begin by proving the null controllability result.
 
 \begin{proof}[Proof of Theorem \ref{null_control_thm}]
-First of all, for all $\varphi^T\in L^2(-1,1)$, let $\varphi(x,t)$ be the unique weak solution to the adjoint system
+First of all, for all $\varphi^T\in L^2(-1,1)$, we introduce the following adjoint system associated to \eqref{heat_frac}
 \begin{align}\label{heat_frac_adj}
 	\begin{cases}
 		-\varphi_t + \fl{s}{\varphi} = 0, & (x,t)\in (-1,1)\times(0,T)
@@ -13,102 +13,110 @@ First of all, for all $\varphi^T\in L^2(-1,1)$, let $\varphi(x,t)$ be the unique
 		\varphi(x,T) = \varphi^T(x), & x\in (-1,1).
 	\end{cases}
 \end{align}
-
-Multiplying \eqref{heat_frac} by $\varphi$ and integrating over $(-1,1)\times (0,T)$, it is straightforward to check that $z(x,T)=0$ if and only if 
-\begin{align}\label{control_id}
-	\int_0^T\int_{-1}^1 \varphi(x,t)g(x,t)\mathbf{1}_{\omega}(x)\,dxdt = -\int_{-1}^1 z_0(x)\varphi(x,0)\,dx,
-\end{align}
-
-In turn, it is classical that \eqref{control_id} is equivalent to the existence of a constant $C>0$ such that the following observability inequality holds
-\begin{align}\label{obs}
-	\norm{\varphi(x,0)}{L^2(-1,1)}^2\leq C\int_0^T\left|\,\int_{-1}^1 \varphi(x,t)g(x,t)\mathbf{1}_{\omega}(x)\,dx\,\right|^2\,dt,
-\end{align}
-
-Notice that $\varphi$ can be expressed in the basis of the eigenfunctions of the fractional Laplacian on $(-1,1)$ with zero Dirichlet boundary conditions. Namely,
-\begin{align}\label{adj_sol}
-	\varphi(x,t) = \sum_{k\geq 1} \varphi_ke^{-\lambda_k(T-t)}\varrho_k(x), 
-\end{align}
-where $\varphi_k = \langle \varphi^T,\varrho_k\rangle$ and, for $k\geq 1$, $\varrho_k(x)$ are the solutions to the following eigenvalue problem 
+Moreover, notice that, for all $k\in\NN$, the function 
+\begin{align*}
+	\varphi_k(x,t):= \varrho_k(x)e^{\lambda_k(T-t)},
+\end{align*}
+with $\varrho_k(x)$ given by the eigenvalue problem 
 \begin{align*}
 	\begin{cases}
 		\fl{s}{\varrho_k} = \lambda_k\varrho_k, & x\in (-1,1), \;\; k\in\NN
 		\\
-		\varrho_k = 0, & x\in \,\RR\setminus(-1,1).
+		\varrho_k = 0, & x\in \,\RR\setminus(-1,1),
 	\end{cases}
 \end{align*}
-	
-Now, plugging \eqref{adj_sol} into \eqref{obs}, using the orthonormality of the eigenfunctions $\varrho_k$ as a basis of $L^2(-1,1)$ and employing the change of variables $T-t\mapsto t$, the observability inequality becomes 
-\begin{align}\label{obs_spectr}
-	\sum_{k\geq 1} |\varphi_k|^2e^{-2\lambda_k T} \leq C\int_0^T\left|\,\sum_{k\geq 1} \varphi_kg_k(t)e^{-\lambda_k t}\right|^2\,dt, 
+is a solution of \eqref{heat_frac_adj} with the choice $\varphi^T=\varrho_k$.
+
+Multiplying \eqref{heat_frac} by $\varphi_k$ and integrating over $(-1,1)\times (0,T)$, it is straightforward to check that $z(x,T)=0$ if and only if 
+\begin{align}\label{control_id}
+	\int_0^T\int_{-1}^1 \varrho_k(x)e^{-\lambda_kt}g(x,t)\mathbf{1}_{\omega}(x)\,dxdt = -\int_{-1}^1 z_0(x)\varrho_k(x)\,dx=:-z_k^0.
 \end{align}
-where $g_k = \langle g\mathbf{1}_{\omega},\varrho_k\rangle$. 
-	
-By means of the classical moment method (\cite{fattorini1971exact}), inequalities of the form \eqref{obs_spectr} are well known to be true if and only if \eqref{eigen_cond} holds and the eigenfunctions $\varrho_k$ satisfy the following lower bound:
-\begin{align}\label{eigenf_bound}
-	\norm{\varrho_k}{L^2(\omega)}\geq C>0, \,\,\forall \, k\geq 1,
+Let us assume that there exists a sequence $\{q_k\}_{k\in\NN}$ biorthogonal to $\{e^{-\lambda_k t}\}_{k\in\NN}$ on $(0,T)$, that is	
+\begin{align*}
+	\int_0^T q_\ell(t)e^{-\lambda_k t}\,dt = \delta_{k,\ell}.
+\end{align*}
+Then, following the classical moment method (\cite{fattorini1971exact}), the control function $g(x,t)$ defined as 
+\begin{align}\label{g_def}
+	g(x,t):= -\sum_{\ell\geq 1} \frac{z_\ell^0}{\norm{\varrho_\ell}{L^2(\omega)}^2} q_\ell(t)\varrho_\ell(x)
 \end{align}
-where the constant $C$ is independent of $k$. The proof of \eqref{eigenf_bound} is an easy adaptation of the one of \cite[Lemma 2]{kwasnicki2012eigenvalues}. Moreover, according to \cite{kulczycki2010spectral,kwasnicki2012eigenvalues} we have 
+formally satisfies the moment problem \eqref{control_id}. Thus, in order to conclude our proof, we only need to check that following two facts:
+\begin{enumerate}
+	\item The biorthogonal family $\{q_k\}_{k\in\NN}$ indeed exists. 
+	\item The series defining $g(x,t)$ converges.
+\end{enumerate}
+
+By employing the well-known M\"untz theorem (\cite[Page 24]{schwartz1958etude}), the existence of the biorthogonal is guaranteed if and only if \eqref{eigen_cond} holds. Moreover, \cite[Theorem 1.1]{fattorini1974uniform} ensures that, if the eigenvalues $\lambda_k$ satisfy the gap condition
+\begin{align}\label{gap}
+	\lambda_{k+1}-\lambda_k\geq\gamma>0,\;\;\;\forall\,k\in\NN,
+\end{align} 
+then we have the estimate
+\begin{align}\label{biorth_est}
+	\norm{q_k}{L^2(0,T)}\leq Ce^{\tau\lambda_k},\;\;\;\forall k\in\NN,\,\tau>0.
+\end{align}
+According to \cite{kulczycki2010spectral,kwasnicki2012eigenvalues} we have the following expression for the eigenvalues $\lambda_k$.
 \begin{align*}
 	\lambda_k = \left(\frac{k\pi}{2}-\frac{(1-s)\pi}{4}\right)^{2s}+O\left(\frac{1}{k}\right).
 \end{align*}
-	
-Therefore, we easily see that the condition \eqref{eigen_cond} is satisfied if and only if $s>1/2$. If $s\leq 1/2$, instead, the series diverges, since it behaves like an harmonic series. In conclusion, the observability inequality \eqref{obs} holds true when $s>1/2$, but it is false when $s\leq 1/2$. This concludes the proof. 
+
+Therefore, we easily see that the conditions \eqref{eigen_cond} and \eqref{gap} are both satisfied if and only if $s>1/2$. If $s\leq 1/2$, instead, the series \eqref{eigen_cond} diverges, since it behaves like an harmonic series. Finally, the convergence of \eqref{g_def} is a consequence of \eqref{biorth_est} and the following lower bound 
+\begin{align*}
+	\norm{\varrho_k}{L^2(\omega)}\geq C>0, \,\,\forall \, k\geq 1,
+\end{align*}
+where the constant $C$ is independent of $k$, which can be obtained through an easy adaptation of \cite[Lemma 2]{kwasnicki2012eigenvalues}. Our proof is then concluded.
 \end{proof}
 
-Even if for $s\leq 1/2$ null controllability for \eqref{heat_frac} fails, Theorem \ref{approx_control_thm} ensures that, for all $s\in(0,1)$, we still have approximate controllability. This is consequence of a unique continuation property for the fractional Laplacian, which has been obtained in \cite{fall2014unique}.
+Even if for $s\leq 1/2$ null controllability for \eqref{heat_frac} fails, Theorem \ref{approx_control_thm} ensures that for all $s\in(0,1)$ we still have approximate controllability. This is consequence of a unique continuation property for the fractional Laplacian, which has been obtained in \cite{fall2014unique}.
 
 \begin{proof}[Proof of Theorem \ref{approx_control_thm}]
 It is classical (see, e.g., \cite[Theorem 5.2]{micu2004introduction}) that the result is true as soon as one has the following unique continuation property for the solution to the adjoint equation \eqref{heat_frac_adj}.
 	
 \MyQuote{Given $s\in(0,1)$ and $\varphi^T\in L^2(-1,1)$, let $\varphi$ be the unique solution to the system \eqref{heat_frac_adj}. Let $\omega\subset (-1,1)$ be an arbitrary open set. If $\varphi = 0$ on $\omega\times(0,T)$, then $\varphi = 0$ on $(-1,1)\times(0,T)$.}
-	
-Therefore, we are reduced to the proof of the property ($\mathcal P$). To this end, let us recall that $\varphi$ can be expressed in the form \eqref{adj_sol} and let us assume that 
-\begin{align}\label{uc}
-	\varphi=0 \textrm{ in } \omega\times(0,T). 
+Therefore, we are reduced to the proof of the property ($\mathcal P$). To this end, let us recall that $\varphi$ can be expressed in the form 
+\begin{align}\label{adj_sol}
+	\varphi(x,t) = \sum_{k\geq 1} \varphi_ke^{\lambda_k(T-t)}\varrho_k(x),
 \end{align}
-Let $\{\psi_{k_j}\}_{1\leq k\leq m_k}$ be an orthonormal basis of $\ker(\lambda_k-\fl{s}{})$. Then, \eqref{adj_sol} can be rewritten as
+and let us assume that 
+\begin{align}\label{uc}
+	\varphi=0 \;\;\textrm{ in }\;\; \omega\times(0,T). 
+\end{align}
+Let $\{\psi_{k_j}\}_{1\leq k\leq m_k}$ be an orthonormal basis of $\ker\,\left(\lambda_k-\fl{s}{}\right)$. Then, \eqref{adj_sol} can be rewritten as
 \begin{align*}
 	\varphi(x,t) = \sum_{k\geq 1} \left(\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x)\right)e^{-\lambda_k(T-t)}, \;\;\; (x,t)\in (-1,1)\times(-\infty, T). 
 \end{align*}
 
-Let $z\in\CC$ with $\eta:=\Re(z)>0$ and let $N\in\NN$. Since the functions $\psi_{k_j}$, $1\leq j\leq m_k$, $1\leq k\leq N$ are orthonormal, we have that
+Let $\sigma\in\CC$ with $\eta:=\Re(\sigma)>0$ and let $N\in\NN$. Since the functions $\psi_{k_j}$, $1\leq j\leq m_k$, $1\leq k\leq N$ are orthonormal, we have that
 \begin{align*}
-	\norm{\sum_{k=1}^N \left(\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x)\right)e^{z(t-T)}e^{-\lambda_k(T-t)}}{L^2(-1,1)}^2 & \leq \sum_{k=1}^N \left(\sum_{j=1}^{m_k} |\varphi_{k_j}|^2\right)e^{2\eta(t-T)}e^{-2\lambda_k(T-t)}
-	\\
-	& \leq \sum_{k\geq 1} \left(\sum_{j=1}^{m_k} |\varphi_{k_j}|^2\right)e^{2\eta(t-T)}e^{-2\lambda_k(T-t)} \leq Ce^{2\eta(t-T)}\norm{\varphi^T}{L^2(-1,1)}^2.
+	\norm{w_N(x,t)}{L^2(-1,1)}^2 \leq \sum_{k\geq 1} \left(\sum_{j=1}^{m_k} |\varphi_{k_j}|^2\right)e^{2\eta(t-T)}e^{-2\lambda_k(T-t)} \leq Ce^{2\eta(t-T)}\norm{\varphi^T}{L^2(-1,1)}^2,
 \end{align*}
-Hence, letting 
+where we define
 \begin{align*}
-	w_N(x,t):= \sum_{k=1}^N \left(\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x)\right)e^{z(t-T)}e^{-\lambda_k(T-t)},
+	w_N(x,t):= \sum_{k=1}^N \left(\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x)\right)e^{\sigma(t-T)}e^{-\lambda_k(T-t)}.
 \end{align*}
-we have shown that $\norm{w_N(x,t)}{L^2(-1,1)}\leq Ce^{\eta(t-T)}\norm{\varphi^T}{L^2(-1,1)}$. Moreover, we have
+Moreover, we have
 \begin{align*}
 	\int_{-\infty}^T e^{\eta(t-T)}\norm{\varphi^T}{L^2(-1,1)}\,dt = \frac{1}{\eta}\norm{\varphi^T}{L^2(-1,1)}\int_0^{+\infty} e^{-\tau}\,d\tau = \frac{1}{\eta}\norm{\varphi^T}{L^2(-1,1)}.
 \end{align*}
-Therefore, we can apply the Dominated Convergence Theorem, obtaining
+Therefore, we can apply the Dominated Convergence Theorem and the change of variables $T-t\mapsto\tau$, obtaining
 \begin{align}\label{dct_identity}
-	\lim_{N\to+\infty}\int_{-\infty}^T w_N(x,t)\,dt &= \int_{-\infty}^T\lim_{N\to+\infty} w_N(x,t)\,dt = \int_{-\infty}^T e^{z(t-T)} \sum_{k\geq1} \left(\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x)\right)e^{-\lambda_k(T-t)}\,dt \notag
+	\lim_{N\to+\infty}\int_{-\infty}^T w_N(x,t)\,dt &= \int_{-\infty}^T\lim_{N\to+\infty} w_N(x,t)\,dt = \int_{-\infty}^T e^{\sigma(t-T)} \sum_{k\geq1} \left(\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x)\right)e^{-\lambda_k(T-t)}\,dt \notag
 	\\
-	&=\sum_{k\geq1}^{+\infty}\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x) \int_{-\infty}^T e^{z(t-T)}e^{-\lambda_k(T-t)}\,dt =\sum_{k\geq1}^{+\infty}\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x) \int_0^{+\infty} e^{-(z+\lambda_k)\tau}\,d\tau \notag
-	\\
-	&=\sum_{k\geq1}^{+\infty}\sum_{j=1}^{m_k} \frac{\varphi_{k_j}}{z+\lambda_k}\psi_{k_j}(x), \;\;\; x\in (-1,1),\;\Re(z)>0.
+	&=\sum_{k\geq1}\sum_{j=1}^{m_k} \varphi_{k_j}\psi_{k_j}(x) \int_0^{+\infty} e^{-(\sigma+\lambda_k)\tau}\,d\tau = \sum_{k\geq1}\sum_{j=1}^{m_k} \frac{\varphi_{k_j}}{\sigma+\lambda_k}\psi_{k_j}(x), \;\;\; x\in (-1,1),\;\Re(\sigma)>0.
 \end{align} 
 It follows from \eqref{uc} and \eqref{dct_identity} that 
 \begin{align*}
-	\sum_{k\geq1}^{+\infty}\sum_{j=1}^{m_k} \frac{\varphi_{k_j}}{z+\lambda_k}\psi_{k_j}(x)=0, \;\;\; x\in\omega,\;\Re(z)>0.
+	\sum_{k\geq1}\sum_{j=1}^{m_k} \frac{\varphi_{k_j}}{\sigma+\lambda_k}\psi_{k_j}(x)=0, \;\;\; x\in\omega,\;\Re(\sigma)>0.
 \end{align*}
 
-This holds for every $z\in\CC\setminus\{-\lambda_k\}_{k\in\NN}$, using the analytic continuation in $z$. Hence, taking a suitable small circle around $-\lambda_{\ell}$ not including $\{-\lambda_k\}_{k\neq\ell}$ and integrating on that circle we get that
+This holds for every $\sigma\in\CC\setminus\{-\lambda_k\}_{k\in\NN}$, using the analytic continuation in $\sigma$. Hence, taking a suitable small circle around $-\lambda_{\ell}$ not including $\{-\lambda_k\}_{k\neq\ell}$ and integrating on that circle we get that
 \begin{align*}
 	w_\ell:=\sum_{j=1}^{m_{\ell}} \varphi_{\ell_j}\psi_{\ell_j}(x)=0, \;\;\; x\in\omega.
 \end{align*}
 	
-According to \cite[Theorem 1.4]{fall2014unique}, $\fl{s}{}$ has the unique continuation property in the sense that if $\lambda_k$ is an eigenvalue of $\fl{s}{}$ on (-1,1) with Dirichlet boundary conditions, and $(\fl{s}{}-\lambda_k)\varrho_k = 0$ in $(-1,1)$ with $\varrho_k = 0$ in $\omega$, then $\varrho_k = 0$ in $(-1,1)$. 
-This can applied to $w_{\ell}$, in order to conclude $w_{\ell} = 0$ in $(-1,1)$ for every $\ell$. Since $\{\psi_{\ell_j}\}_{1\leq j\leq m_{\ell}}$ are linearly independent in $L^2(-1,1)$, we get $\varphi_{\ell_j} = 0$, $1\leq j\leq m_k$, $\ell\in\NN$. It follows that $\varphi^T=0$ and hence, $\varphi=0$ in $(-1,1)\times(0,T)$, meaning that $\varphi$ enjoys the property $(\mathcal{P})$. As an immediate consequence, we have that our original equation \eqref{heat_frac} is approximately controllable. Our proof is then concluded. 
+According to \cite[Theorem 1.4]{fall2014unique}, providing a unique continuation property for $\fl{s}{}$, we have that $w_{\ell} = 0$ in $(-1,1)$ for every $\ell$. Since $\{\psi_{\ell_j}\}_{1\leq j\leq m_{\ell}}$ are linearly independent in $L^2(-1,1)$, we get $\varphi_{\ell_j} = 0$, $1\leq j\leq m_k$, $\ell\in\NN$. It follows that $\varphi^T=0$ and hence, $\varphi=0$ in $(-1,1)\times(0,T)$, meaning that $\varphi$ enjoys the property $(\mathcal{P})$. As an immediate consequence, we have that our original equation \eqref{heat_frac} is approximately controllable. Our proof is then concluded. 
 \end{proof}
 
 \begin{remark}
-According to \cite{fall2014unique}, the elliptic unique continuation property for the fractional Laplacian holds in any space dimension. In view of that, Theorem \ref{approx_control_thm} may be extended also to the case $N>1$. On the other hand, the same does not applies to Theorem \ref{null_control_thm}. Indeed, the proof of this result use arguments that are designed specifically for one-dimensional problems (\cite{fattorini1971exact}). If one would like to analyze the null-controllability in a general multi-dimensional setting, other tools (for instance Carleman estimates) are needed. As far as we know, these techniques have not been fully developed yet for problems involving the fractional Laplacian on a domain. 
+According to \cite{fall2014unique}, the elliptic unique continuation property for the fractional Laplacian holds in any space dimension. In view of that, Theorem \ref{approx_control_thm} may be extended also to the case $N>1$. On the other hand, the same does not applies to Theorem \ref{null_control_thm}, since its proof uses arguments that are designed specifically for one-dimensional problems (\cite{fattorini1971exact}). If one would like to analyze the multi-dimensional problem, other tools (for instance Carleman estimates) are needed. As far as we know, these techniques have not been fully developed yet for problems involving the fractional Laplacian on a domain. Notice also that neither a Lebeau-Robbiano approach, as employed in \cite{miller2006controllability}, can be used in our case. Indeed, these techniques require explicit information on the behavior of the spectrum which, to the best of our knowledge, is not available for the integral definition of the operator on general domains.
 \end{remark}
 
 \begin{remark}
